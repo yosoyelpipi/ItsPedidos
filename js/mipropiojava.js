@@ -35,12 +35,16 @@ function checkConnection() {
             var states = {};
             states[Connection.UNKNOWN]  = 'No podemos determinar tu tipo de conexión a una red de datos.';
             states[Connection.ETHERNET] = 'Estás conectado a la red mediante Ethernet connection, vas a poder realizar el test de conexion.';
-            states[Connection.WIFI]     = 'Estás conectado a la red mediante WiFi connection, vas a poder realizar el test de conexion.';
+            states[Connection.WIFI]     = 'Estás conectado a la red mediante WiFi, vas a poder realizar el test de conexion.';
             states[Connection.CELL_2G]  = 'Estás conectado a la red mediante Cell 2G connection, vas a poder realizar el test de conexion.';
             states[Connection.CELL_3G]  = 'Estás conectado a la red mediante Cell 3G connection, vas a poder realizar el test de conexion.';
             states[Connection.CELL_4G]  = 'Estás conectado a la red mediante Cell 4G connection, vas a poder realizar el test de conexion.';
             states[Connection.CELL]     = 'Estás conectado a la red mediante Cell generic connection, podrías experimentar lentitud en la medición.';
             states[Connection.NONE]     = '¡Atención! tu dispositivo no tiene conexion a datos, no podrás realizar el test. Activa tu conexión WiFi o vuelve en otro momento.';
-
+			
+			if(states[networkState] == 'Connection.WIFI'){
+				alert('Hijo de puta estas por wifi esto vuelaaaaa');
+			}
+			
             alert(states[networkState]);
         }
