@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <widget xmlns = "http://www.w3.org/ns/widgets"
 		xmlns:gap = "http://phonegap.com/ns/1.0"
-		id        = "com.mascotasvqrlibsanitaria.app"
+		id        = "com.itspedidos.app"
 		version   = "1.0.3">
 
-	<name>MascotasVQR</name>
+	<name>ItsPedidos</name>
 
 	<description>
-	Con esta aplicación tanto vos como tu veterinario van a poder actualizar la libreta sanitaria de tu mascota en todo momento, en cualquier lugar. MascotasVQR es innovación constante.
+	Crea pedidos on line u off line. Lista de precios.
 	</description>
 
 
