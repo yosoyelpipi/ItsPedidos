@@ -68,30 +68,7 @@
         <p class="lead"></p>
 	
     <h1>Local Storage</h1>
-	
-	<input type="text" name="username" id="username"/>
-	<button id="save">Save</button>
-	<button id="load">Load</button>
-	<button id="clear">Clear</button>
- 
-		<script type="text/javascript">
-		$(function() {
-		   // Save input value to localStorage
-		   $('#save').on('click', function() {
-			  var username = $('#username').val();
-			  localStorage.setItem("username", username);
-		   });
-		   // Load input value from localStorage
-		   $('#load').on('click', function() {
-			  var username = localStorage.getItem('username') || '<empty>';
-			  $('#username').val(username);
-		   });
-		   // Clear localStorage
-		   $('#clear').on('click', function() {
-			  localStorage.clear();
-		   });
-		});
-		</script>
+	<button class="btn btn-default" type="button" onclick="checkConnection()">Chekear conexión</button>
 
 					<div id="conecto" align="center">
 						<img src="img/velocimetro.gif">
