@@ -44,10 +44,12 @@ function checkConnection() {
 			
 			if(navigator.network.connection.type == Connection.NONE){
 				// No tenemos conexión
-				alert('No tenés conexión LTA');
+				alert('No tenés conexión LTA.');
+				$("#pedoff").html('<span class="glyphicon glyphicon-volume-off" aria-hidden="true"></span> Puedo agregar pedidos e modo off line.');
 			}else{
 				// Si tenemos conexión
-				alert('Vamoooooooooooossssss');
+				alert('Vamoooooooooooossssss.');
+				$("#pedon").html('<span class="glyphicon glyphicon-signal" aria-hidden="true"></span> Puedo agregar pedidos e modo off line.');
 			}
 			
             alert(states[networkState]);
