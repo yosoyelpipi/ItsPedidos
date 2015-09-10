@@ -45,11 +45,13 @@ function checkConnection() {
 			if(navigator.network.connection.type == Connection.NONE){
 				// No tenemos conexión
 				alert('No tenés conexión LTA.');
+				$("#pedon").fadeout();
 				$("#pedoff").html('<span class="glyphicon glyphicon-volume-off" aria-hidden="true"></span> Puedo agregar pedidos e modo off line.');
 			}else{
 				// Si tenemos conexión
 				alert('Vamoooooooooooossssss.');
-				$("#pedon").html('<span class="glyphicon glyphicon-signal" aria-hidden="true"></span> Puedo agregar pedidos e modo off line.');
+				$("#pedoff").fadeout();
+				$("#pedon").html('<span class="glyphicon glyphicon-signal" aria-hidden="true"></span> Ahora puedo sincronizar la lista de precios.');
 			}
 			
             alert(states[networkState]);
