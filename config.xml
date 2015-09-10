@@ -2,12 +2,12 @@
 <widget xmlns = "http://www.w3.org/ns/widgets"
 		xmlns:gap = "http://phonegap.com/ns/1.0"
 		id        = "com.itspedidos.app"
-		version   = "1.0.3">
+		version   = "1.0.4">
 
-	<name>ItsPedidos</name>
+	<name>ItsPed</name>
 
 	<description>
-	Crea pedidos on line u off line. Lista de precios.
+	ItsPedidos.
 	</description>
 
 
@@ -27,7 +27,7 @@
 	<preference name="android-targetSdkVersion" value="19" />
 	<preference name="android-maxSdkVersion" value="19" />
 
-	<author href="http://www.mascotasvqr.com" email="contacto@mascotasvqr.com">
+	<author href="http://www.leocondori.com.ar" email="contacto@leocondori.com.ar">
 	@leocondori
 	</author>
 

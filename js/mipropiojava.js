@@ -7,7 +7,7 @@ function onDeviceReady(){
 	$("#resultado").html('<span class="glyphicon glyphicon-registration-mark" aria-hidden="true"></span>');
 
 	//inicializa la verificación de la conexión
-	//checkConnection();
+	checkConnection();
     
 	//Habilita la función del botón atrás.
 	document.addEventListener("backbutton", onBackKeyDown, false);
@@ -28,19 +28,19 @@ function onBackKeyDown() {
                   navigator.app.exitApp();
             }
 		}
-		/*
+		
 function checkConnection() {
             var networkState = navigator.connection.type;
 
             var states = {};
             states[Connection.UNKNOWN]  = 'No podemos determinar tu tipo de conexión a una red de datos.';
-            states[Connection.ETHERNET] = 'Estás conectado a la red mediante Ethernet connection, vas a ir muy rápido.';
-            states[Connection.WIFI]     = 'Estás conectado a la red mediante WiFi connection, vas a ir muy rápido.';
-            states[Connection.CELL_2G]  = 'Estás conectado a la red mediante Cell 2G connection, vas a ir muy rápido.';
-            states[Connection.CELL_3G]  = 'Estás conectado a la red mediante Cell 3G connection, vas a ir muy rápido.';
-            states[Connection.CELL_4G]  = 'Estás conectado a la red mediante Cell 4G connection, vas a ir muy rápido.';
-            states[Connection.CELL]     = 'Estás conectado a la red mediante Cell generic connection, podrías experimentar lentitud en la aplicación.';
-            states[Connection.NONE]     = '¡Atención! No estás conectado a ninguna red, no podrás cargar la libreta sanitaria. Activa tu conexión WiFi o vuelve en otro momento.';
+            states[Connection.ETHERNET] = 'Estás conectado a la red mediante Ethernet connection, vas a poder realizar el test de conexion.';
+            states[Connection.WIFI]     = 'Estás conectado a la red mediante WiFi connection, vas a poder realizar el test de conexion.';
+            states[Connection.CELL_2G]  = 'Estás conectado a la red mediante Cell 2G connection, vas a poder realizar el test de conexion.';
+            states[Connection.CELL_3G]  = 'Estás conectado a la red mediante Cell 3G connection, vas a poder realizar el test de conexion.';
+            states[Connection.CELL_4G]  = 'Estás conectado a la red mediante Cell 4G connection, vas a poder realizar el test de conexion.';
+            states[Connection.CELL]     = 'Estás conectado a la red mediante Cell generic connection, podrías experimentar lentitud en la medición.';
+            states[Connection.NONE]     = '¡Atención! tu dispositivo no tiene conexion a datos, no podrás realizar el test. Activa tu conexión WiFi o vuelve en otro momento.';
 
             alert(states[networkState]);
-        }*/
+        }
