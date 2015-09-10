@@ -42,8 +42,12 @@ function checkConnection() {
             states[Connection.CELL]     = 'Estás conectado a la red mediante Cell generic connection, podrías experimentar lentitud en la medición.';
             states[Connection.NONE]     = '¡Atención! tu dispositivo no tiene conexion a datos, no podrás realizar el test. Activa tu conexión WiFi o vuelve en otro momento.';
 			
-			if(networkState == states[Connection.WIFI]){
-				alert('Hijo de puta estas por wifi esto vuelaaaaa.....');
+			if(navigator.network.connection.type == Connection.NONE){
+				// No tenemos conexión
+				alert('No tenés conexión LTA');
+			}else{
+				// Si tenemos conexión
+				alert('Vamoooooooooooossssss');
 			}
 			
             alert(states[networkState]);
