@@ -1,3 +1,8 @@
+function onBodyLoad(){
+	mkLog("Aplicación cargada y lista.");
+	document.addEventListener("deviceready", onDeviceReady, false);
+}
+
 var i_log = 0;
 function mkLog(text){
 	var date = new Date();
@@ -8,14 +13,8 @@ function mkLog(text){
 	var existe_db;
 	var db;
 
-
-function onBodyLoad(){
-	mkLog(Aplicación cargada y lista.);
-	document.addEventListener("deviceready", onDeviceReady, false);
-}
-
 function onDeviceReady(){
-	mkLog(Aplicación cargada y lista.);
+	mkLog("Aplicación cargada y lista.");
 	$("#resultado").html('<span class="glyphicon glyphicon-registration-mark" aria-hidden="true"></span>');
 	
 	existe_db = window.localStorage.getItem("existe_db");
