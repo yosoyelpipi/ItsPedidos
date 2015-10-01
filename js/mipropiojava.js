@@ -1,11 +1,32 @@
+var i_log = 0;
+function mkLog(text){
+	var date = new Date();
+	var txt = i_log + " - " + date.getHours() + "-" + date.getMinutes() * "-" + date.getSeconds() + ": " + text; 
+	i_log++;
+	console.log(txt);
+}
+	var existe_db;
+	var db;
+
 
 function onBodyLoad(){
+	mkLog(Aplicación cargada y lista.);
 	document.addEventListener("deviceready", onDeviceReady, false);
 }
 
 function onDeviceReady(){
+	mkLog(Aplicación cargada y lista.);
 	$("#resultado").html('<span class="glyphicon glyphicon-registration-mark" aria-hidden="true"></span>');
-
+	
+	existe_db = window.localStorage.getItem("existe_db");
+	db = window.openDatabase("erp_paises", "1.0", "Paises", 200000);
+	
+	if(existe_db == null){
+		crearDB();
+	}else{
+		cargaDatos();
+	}
+	
 	//inicializa la verificación de la conexión
 	checkConnection();
     
@@ -56,3 +77,62 @@ function checkConnection() {
 			
             alert(states[networkState]);
         }
+		
+/*
+*Creación de base de datos
+*/
+function crearDB(){
+	db.transaction(crearNuevaDB, errorDB, crearSuccess);
+	}
+
+function crearNuevaDB(txt){
+	tx.executeSql('DROP TABLE IF EXISTS erp_paises');
+	var sql ="CREATE TABLE IF NOT EXISTS erp_paises ( "+
+	         "id INTEGER PRIMARY KEY AUTOINCREMENTAL, "+
+			 "descripcion VARCHAR(50),"+
+			 "sigla VARCHAR(5) )";
+	tx.executeSql(sql);
+
+	tx.executeSql("INSERT INTO erp_paises (descripcion, sigla) VALUES ('Argentina', 'AR')");
+	tx.executeSql("INSERT INTO erp_paises (descripcion, sigla) VALUES ('Brasil', 'BR')");
+	tx.executeSql("INSERT INTO erp_paises (descripcion, sigla) VALUES ('Bolivia', 'BO')");
+	tx.executeSql("INSERT INTO erp_paises (descripcion, sigla) VALUES ('Colombia', 'CO')");
+}
+
+function crearSuccess(){
+	existe_db = window.localStorage.setItem("existe_db", 1);
+	cargaDatos();
+}
+
+function errorDB(err){
+	mkLog("Error procesando SQL:" + err.code);
+	navigator.notification.alert(Error procesando SQL:" + err.code);
+}
+
+/*
+*Cargar desde la base de datos
+*/
+function cargaDatos(){
+	db.transaction(cargaRegistros, errorDB);
+}
+
+function cargaRegistros(tx){
+	mkLog("Cargando registros de la base de datos.");
+	tx.executeSql('select * from erp_paises', [], cargaDatosSuccess, errorDB);
+}
+
+function cargaDatosSuccess(tx, results){
+	mkLog("Recibidos de la base de datos" + results.rows.length + " registros");
+	if(results.rows.length == 0){
+		mkLog("La tabla está vacía.");
+		navigator.notification.alert("La tabla está vacía.");
+	}
+	
+	for(var i=0; i<results.rows.length; i++){
+		var paises = results.rows.item(i);
+		var selector = $('#muestroresultado');
+		selector.append('<p>El país es ' + paises.descripcion + '</p>' +
+		                '<p>La sigla es ' + paises.sigla + '</p>');
+	}
+	
+}	
