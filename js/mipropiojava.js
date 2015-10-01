@@ -106,7 +106,7 @@ function crearSuccess(){
 
 function errorDB(err){
 	mkLog("Error procesando SQL:" + err.code);
-	navigator.notification.alert(Error procesando SQL:" + err.code);
+	navigator.notification.alert("Error procesando SQL:" + err.code);
 }
 
 /*
