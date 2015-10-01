@@ -92,19 +92,21 @@ function crearNuevaDB(txt){
 			 "sigla VARCHAR(5) )";
 	tx.executeSql(sql);
 
-	tx.executeSql("INSERT INTO erp_paises (descripcion, sigla) VALUES ('Argentina', 'AR')");
-	tx.executeSql("INSERT INTO erp_paises (descripcion, sigla) VALUES ('Brasil', 'BR')");
-	tx.executeSql("INSERT INTO erp_paises (descripcion, sigla) VALUES ('Bolivia', 'BO')");
-	tx.executeSql("INSERT INTO erp_paises (descripcion, sigla) VALUES ('Colombia', 'CO')");
+	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES ('1', 'Argentina', 'AR')");
+	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES ('2', 'Brasil', 'BR')");
+	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES ('3', 'Bolivia', 'BO')");
+	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES ('4', 'Colombia', 'CO')");
 }
 
 function crearSuccess(){
 	existe_db = window.localStorage.setItem("existe_db", 1);
+	$("#muestroresultado").html('<span class="glyphicon glyphicon-registration-mark" aria-hidden="true">cree la base guacho</span>');
 	cargaDatos();
 }
 
 function errorDB(err){
 	mkLog("Error procesando SQL:" + err.code);
+	$("#muestroresultado").html('<span class="glyphicon glyphicon-registration-mark" aria-hidden="true">algun quilombo tengo</span>');
 	navigator.notification.alert("Error procesando SQL:" + err.code);
 }
 
