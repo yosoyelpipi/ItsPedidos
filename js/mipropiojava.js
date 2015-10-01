@@ -10,12 +10,12 @@ function mkLog(text){
 	i_log++;
 	console.log(txt);
 }
-	var existe_db;
-	var db;
+	var existe_db
+	var db
 
 function onDeviceReady(){
 	mkLog("Aplicación cargada y lista.");
-	$("#resultado").html('<span class="glyphicon glyphicon-registration-mark" aria-hidden="true"></span>');
+	$("#muestroresultado").html('<span class="glyphicon glyphicon-registration-mark" aria-hidden="true"></span>');
 	
 	existe_db = window.localStorage.getItem("existe_db");
 	db = window.openDatabase("erp_paises", "1.0", "Paises", 200000);
@@ -86,8 +86,8 @@ function crearDB(){
 
 function crearNuevaDB(txt){
 	tx.executeSql('DROP TABLE IF EXISTS erp_paises');
-	var sql ="CREATE TABLE IF NOT EXISTS erp_paises ( "+
-	         "id INTEGER PRIMARY KEY AUTOINCREMENTAL, "+
+	var sql= "CREATE TABLE IF NOT EXISTS erp_paises ( "+
+	         "id INTEGER PRIMARY KEY AUTOINCREMENT, "+
 			 "descripcion VARCHAR(50),"+
 			 "sigla VARCHAR(5) )";
 	tx.executeSql(sql);
