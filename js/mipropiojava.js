@@ -1,9 +1,10 @@
 var i_log = 0;
 function mkLog(text){
 	var date = new Date();
-	var txt = i_log + " - " + date.getHours() + "-" + date.getMinutes() * "-" + date.getSeconds() + ": " + text; 
+	var txt = i_log + " - " + date.getHours() + "-" + date.getMinutes() + "-" + date.getSeconds() + ": " + text; 
 	i_log++;
 	console.log(txt);
+	$("#log").append(txt + '<br>');
 }
 	var existe_db
 	var db
