@@ -14,17 +14,6 @@ function mkLog(text){
 	var db
 
 function onDeviceReady(){
-	mkLog("Aplicación cargada y lista.");
-	$("#muestroresultado").html('<span class="glyphicon glyphicon-registration-mark" aria-hidden="true"></span>');
-	
-	existe_db = window.localStorage.getItem("existe_db");
-	db = window.openDatabase("erp_paises", "1.0", "Paises", 200000);
-	
-	if(existe_db == null){
-		crearDB();
-	}else{
-		cargaDatos();
-	}
 	
 	//inicializa la verificación de la conexión
 	checkConnection();
@@ -34,6 +23,20 @@ function onDeviceReady(){
 	
 	//Habilita la función del botón menú.
 	document.addEventListener("menubutton", onMenuKeyDown, false);
+	
+	mkLog("Aplicación cargada y lista.");
+	$("#muestroresultado").html('<span class="glyphicon glyphicon-registration-mark" aria-hidden="true"></span> Aplicación cargada y lista');
+	
+	existe_db = window.localStorage.getItem("existe_db");
+	db = window.openDatabase("erp_paises", "1.0", "Paises", 200000);
+	
+	if(existe_db == null){
+		crearDB();
+		$("#muestroresultado").html('<span class="glyphicon glyphicon-registration-mark" aria-hidden="true">Detecte que no esta la base de datos.</span>');
+	}else{
+		cargaDatos();
+		$("#muestroresultado").html('<span class="glyphicon glyphicon-registration-mark" aria-hidden="true">Ya esta creada, la tengo que cargar</span>');
+	}
 
 }
 
@@ -84,7 +87,7 @@ function crearDB(){
 	db.transaction(crearNuevaDB, errorDB, crearSuccess);
 	}
 
-function crearNuevaDB(txt){
+function crearNuevaDB(tx){
 	tx.executeSql('DROP TABLE IF EXISTS erp_paises');
 	$("#muestroresultado").html('<span class="glyphicon glyphicon-registration-mark" aria-hidden="true">Borre todo el contenido de la tabla con DROP TABLE</span>');
 	
