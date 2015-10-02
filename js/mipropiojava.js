@@ -25,17 +25,14 @@ function onDeviceReady(){
 	document.addEventListener("menubutton", onMenuKeyDown, false);
 	
 	mkLog("Aplicación cargada y lista.");
-	$("#muestroresultado").html('<span class="glyphicon glyphicon-registration-mark" aria-hidden="true"></span> Aplicación cargada y lista');
 	
 	existe_db = window.localStorage.getItem("existe_db");
 	db = window.openDatabase("erp_paises", "1.0", "Paises", 200000);
 	
 	if(existe_db == null){
 		crearDB();
-		$("#muestroresultado").html('<span class="glyphicon glyphicon-registration-mark" aria-hidden="true">Detecte que no esta la base de datos.</span>');
 	}else{
 		cargaDatos();
-		$("#muestroresultado").html('<span class="glyphicon glyphicon-registration-mark" aria-hidden="true">Ya esta creada, la tengo que cargar</span>');
 	}
 
 }
@@ -88,8 +85,8 @@ function crearDB(){
 	}
 
 function crearNuevaDB(tx){
+	mkLog("Creando base de datos.");
 	tx.executeSql('DROP TABLE IF EXISTS erp_paises');
-	$("#muestroresultado").html('<span class="glyphicon glyphicon-registration-mark" aria-hidden="true">Borre todo el contenido de la tabla con DROP TABLE</span>');
 	
 	var sql = "CREATE TABLE IF NOT EXISTS erp_paises ( " +
 	          "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -106,13 +103,11 @@ function crearNuevaDB(tx){
 
 function crearSuccess(){
 	existe_db = window.localStorage.setItem("existe_db", 1);
-	$("#muestroresultado").html('<span class="glyphicon glyphicon-registration-mark" aria-hidden="true">cree la base guacho</span>');
 	cargaDatos();
 }
 
 function errorDB(err){
 	mkLog("Error procesando SQL:" + err.code);
-	$("#muestroresultado").html('<span class="glyphicon glyphicon-registration-mark" aria-hidden="true">algun quilombo tengo</span>');
 	navigator.notification.alert("Error procesando SQL:" + err.code);
 }
 
