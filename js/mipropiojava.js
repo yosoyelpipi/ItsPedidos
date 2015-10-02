@@ -15,6 +15,7 @@ function onBodyLoad(){
 }
 
 function onDeviceReady(){
+    mkLog("Aplicación cargada y lista.");
 	
 	//inicializa la verificación de la conexión
 	checkConnection();
@@ -25,8 +26,9 @@ function onDeviceReady(){
 	//Habilita la función del botón menú.
 	document.addEventListener("menubutton", onMenuKeyDown, false);
 	
-	mkLog("Aplicación cargada y lista.");
+	
 	existe_db = window.localStorage.getItem("existe_db");	
+	
 	db = window.openDatabase("erp_paises", "1.0", "Paises", 200000);
 	
 	if(existe_db == null){
