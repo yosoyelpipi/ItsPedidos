@@ -86,16 +86,19 @@ function crearDB(){
 
 function crearNuevaDB(txt){
 	tx.executeSql('DROP TABLE IF EXISTS erp_paises');
-	var sql= "CREATE TABLE IF NOT EXISTS erp_paises ( "+
-	         "id INTEGER PRIMARY KEY AUTOINCREMENT, "+
-			 "descripcion VARCHAR(50),"+
-			 "sigla VARCHAR(5) )";
+	$("#muestroresultado").html('<span class="glyphicon glyphicon-registration-mark" aria-hidden="true">Borre todo el contenido de la tabla con DROP TABLE</span>');
+	
+	var sql = "CREATE TABLE IF NOT EXISTS erp_paises ( " +
+	          "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+			  "descripcion VARCHAR(50)," +
+			  "sigla VARCHAR(5) )";
+			  
 	tx.executeSql(sql);
 
-	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES ('1', 'Argentina', 'AR')");
-	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES ('2', 'Brasil', 'BR')");
-	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES ('3', 'Bolivia', 'BO')");
-	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES ('4', 'Colombia', 'CO')");
+	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (1, 'Argentina', 'AR')" );
+	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (2, 'Brasil', 'BR')" );
+	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (3, 'Bolivia', 'BO')" );
+	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (4, 'Colombia', 'CO')" );
 }
 
 function crearSuccess(){
