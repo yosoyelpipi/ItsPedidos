@@ -1,8 +1,3 @@
-function onBodyLoad(){
-	mkLog("Aplicación cargada y lista.");
-	document.addEventListener("deviceready", onDeviceReady, false);
-}
-
 var i_log = 0;
 function mkLog(text){
 	var date = new Date();
@@ -12,6 +7,12 @@ function mkLog(text){
 }
 	var existe_db
 	var db
+
+
+function onBodyLoad(){
+	mkLog("Aplicación cargada y lista.");
+	document.addEventListener("deviceready", onDeviceReady, false);
+}
 
 function onDeviceReady(){
 	
@@ -25,12 +26,11 @@ function onDeviceReady(){
 	document.addEventListener("menubutton", onMenuKeyDown, false);
 	
 	mkLog("Aplicación cargada y lista.");
-	
-	existe_db = window.localStorage.getItem("existe_db");
+	existe_db = window.localStorage.getItem("existe_db");	
 	db = window.openDatabase("erp_paises", "1.0", "Paises", 200000);
 	
 	if(existe_db == null){
-		crearDB();
+		creaDB();
 	}else{
 		cargaDatos();
 	}
@@ -80,14 +80,14 @@ function checkConnection() {
 /*
 *Creación de base de datos
 */
-function crearDB(){
-	db.transaction(crearNuevaDB, errorDB, crearSuccess);
+function creaDB(){
+	db.transaction(creaNuevaDB, errorDB, crearSuccess);
 	}
 
-function crearNuevaDB(tx){
+function creaNuevaDB(tx){
 	mkLog("Creando base de datos.");
-	tx.executeSql('DROP TABLE IF EXISTS erp_paises');
 	
+	tx.executeSql('DROP TABLE IF EXISTS erp_paises');
 	var sql = "CREATE TABLE IF NOT EXISTS erp_paises ( " +
 	          "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
 			  "descripcion VARCHAR(50)," +
