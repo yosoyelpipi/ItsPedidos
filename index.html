@@ -193,6 +193,11 @@ function cargaDatosSuccess(tx, results){
 }	
 	</script>
 
+<style>
+#muestroresultado{
+	text-align: left;
+}
+</style>	
   </head>
 
   <body onload="onBodyLoad()">
@@ -220,24 +225,26 @@ function cargaDatosSuccess(tx, results){
     </nav>
 
     <div class="container">
-		<div class="starter-template">
-			<ol class="breadcrumb">
-			  <li><a href="#">Ventas</a></li>
-			  <li class="active">Pedidos de ventas</li>
-			</ol>
+		<div id="row">
+			<div class="starter-template">
+				<ol class="breadcrumb">
+				  <li><a href="#">Ventas</a></li>
+				  <li class="active">Pedidos de ventas</li>
+				</ol>
 
-			<table class="table">
-			  <caption>Paises disponibles</caption>
-			  <thead>
-				<tr>
-				  <th>Código</th>
-				  <th>Descripción</th>
-				  <th>Siglas</th>
-				</tr>
-			  </thead>
-			  <tbody id="muestroresultado">
-			  </tbody>
-			</table>			
+				<table class="table">
+				  <caption>Paises disponibles</caption>
+				  <thead>
+					<tr>
+					  <th>Código</th>
+					  <th>Descripción</th>
+					  <th>Siglas</th>
+					</tr>
+				  </thead>
+				  <tbody id="muestroresultado">
+				  </tbody>
+				</table>			
+			</div>
 		</div>
     </div><!-- /.container -->
 
