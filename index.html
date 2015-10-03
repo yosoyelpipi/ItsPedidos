@@ -111,12 +111,12 @@ function checkConnection() {
 			
 			if(navigator.network.connection.type == Connection.NONE){
 				// No tenemos conexión
-				alert('No tenés conexión LTA.');
+				alert(states[networkState]);
 				$("#pedon").fadeout();
 				$("#pedoff").html('<span class="glyphicon glyphicon-volume-off" aria-hidden="true"></span> Puedo agregar pedidos e modo off line.');
 			}else{
 				// Si tenemos conexión
-				alert('Vamoooooooooooossssss.');
+				alert(states[networkState]);
 				$("#pedoff").fadeout();
 				$("#pedon").html('<span class="glyphicon glyphicon-signal" aria-hidden="true"></span> Ahora puedo sincronizar la lista de precios.');
 			}
@@ -258,7 +258,37 @@ function cargaDatosSuccess(tx, results){
 			<div id="muestroresultado"></div>
 			<div id="pie"></div>
 
-
+    <table class="table">
+      <caption>Optional table caption.</caption>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Username</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>Larry</td>
+          <td>the Bird</td>
+          <td>@twitter</td>
+        </tr>
+      </tbody>
+    </table>
 				
     </div>
 
