@@ -182,8 +182,8 @@ function cargaDatosSuccess(tx, results){
 	}
 	
 
-	var selector = $('#muestroresultado');
-	selector.append('<table class="table">' +
+	var cabeza = $('#cabeza');
+	cabeza.append('<table class="table">' +
 						'  <caption>Países disponibles</caption>' +
 						'  <thead>' +
 						'	<tr>' +
@@ -196,14 +196,15 @@ function cargaDatosSuccess(tx, results){
 	
 	for(var i=0; i<results.rows.length; i++){
 		var paises = results.rows.item(i);
-		//var selector = $('#muestroresultado');
+		var selector = $('#muestroresultado');
 		selector.append('<tr>' +
 							'<th scope="row">' + paises.id + '</th>' +
 							'<td>' + paises.descripcion + '</td>' +
 							'<td>' + paises.sigla + '</td>' +
 						'</tr>').listview('refresh');
 	}
-	selector.append('</tbody>' +
+	var pie = $('#pie');
+	pie.append('</tbody>' +
 			      '</table>');
 }	
 	</script>
@@ -247,8 +248,9 @@ function cargaDatosSuccess(tx, results){
 
 			<div id="conecto" align="center"><img src="img/velocimetro.gif"></div>
 
-
-					<div id="muestroresultado"></div>
+			<div id="cabeza"></div>
+			<div id="muestroresultado"></div>
+			<div id="pie"></div>
 
 
 				
