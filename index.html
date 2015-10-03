@@ -181,18 +181,6 @@ function cargaDatosSuccess(tx, results){
 		navigator.notification.alert("La tabla está vacía.");
 	}
 	
-	var cabeza = $('#cabeza');
-	cabeza.append('<table class="table">' +
-						'  <caption>Países disponibles</caption>' +
-						'  <thead>' +
-						'	<tr>' +
-						'	  <th>Código</th>' +
-						'	  <th>Descipción</th>' +
-						'	  <th>Sigla</th>' +
-						'	</tr>' +
-						'  </thead>' +
-						'  <tbody>');
-	
 	for(var i=0; i<results.rows.length; i++){
 		var paises = results.rows.item(i);
 		var selector = $('#muestroresultado');
@@ -202,9 +190,6 @@ function cargaDatosSuccess(tx, results){
 							'<td>' + paises.sigla + '</td>' +
 						'</tr>');
 	}
-	var pie = $('#pie');
-	pie.append('</tbody>' +
-			   '</table>');
 }	
 	</script>
 	
@@ -254,40 +239,19 @@ function cargaDatosSuccess(tx, results){
 
 			<div id="conecto" align="center"><img src="img/velocimetro.gif"></div>
 
-			<div id="cabeza"></div>
-			<div id="muestroresultado"></div>
-      </tbody>
-    </table>
+
+			<!--<div id="muestroresultado"></div>-->
 
     <table class="table">
-      <caption>Optional table caption.</caption>
+      <caption>Paises disponibles</caption>
       <thead>
         <tr>
-          <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
+          <th>Código</th>
+          <th>Descripción</th>
+          <th>Siglas</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
+      <tbody id="muestroresultado">
       </tbody>
     </table>
 				
