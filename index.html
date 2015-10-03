@@ -146,6 +146,10 @@ function creaNuevaDB(tx){
 	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (2, 'Brasil', 'BR')" );
 	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (3, 'Bolivia', 'BO')" );
 	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (4, 'Colombia', 'CO')" );
+	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (5, 'Chile', 'CH')" );
+	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (6, 'Ecuador', 'EC')" );
+	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (7, 'Paraguay', 'PY')" );
+	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (8, 'Uruguay', 'UY')" );
 }
 
 function crearSuccess(){
@@ -192,12 +196,12 @@ function cargaDatosSuccess(tx, results){
 	
 	for(var i=0; i<results.rows.length; i++){
 		var paises = results.rows.item(i);
-		
+		//var selector = $('#muestroresultado');
 		selector.append('<tr>' +
 							'<th scope="row">' + paises.id + '</th>' +
 							'<td>' + paises.descripcion + '</td>' +
 							'<td>' + paises.sigla + '</td>' +
-						'</tr>');
+						'</tr>').listview('refresh');
 	}
 	selector.append('</tbody>' +
 			      '</table>');
