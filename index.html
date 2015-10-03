@@ -181,7 +181,6 @@ function cargaDatosSuccess(tx, results){
 		navigator.notification.alert("La tabla está vacía.");
 	}
 	
-
 	var cabeza = $('#cabeza');
 	cabeza.append('<table class="table">' +
 						'  <caption>Países disponibles</caption>' +
@@ -205,7 +204,7 @@ function cargaDatosSuccess(tx, results){
 	}
 	var pie = $('#pie');
 	pie.append('</tbody>' +
-			      '</table>');
+			   '</table>');
 }	
 	</script>
 	
@@ -222,26 +221,27 @@ function cargaDatosSuccess(tx, results){
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">ItsTestConnection</span>
+            <span class="sr-only">ItsClient</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-sort" aria-hidden="true"></span> ItsTestConnection</a>
+          <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Pedidos de Ventas</a>
         </div>
       </div>
     </nav>
 
     <div class="container">
-
-    <div class="starter-template">
-		<h1>LocalStorage + WS</h1>
-			<p class="lead"></p>
+	<div class="starter-template">
+		<ol class="breadcrumb">
+		  <li><a href="#">Ventas</a></li>
+		  <li><a href="#">Comprobantes</a></li>
+		  <li class="active">Pedidos de ventas</li>
+		</ol>
 		
-		<h1>Local Storage</h1>
-			<button class="btn btn-default" type="button" onclick="checkConnection()">Chekear conexión</button>
-			<button class="btn btn-default" type="button" onclick="creaDB()">creaDB</button>
-			<button class="btn btn-default" type="button" onclick="cargaDatos()">cargaDatos</button>
+			<button class="btn btn-info" type="button" onclick="checkConnection()"><span class="glyphicon glyphicon-signal" aria-hidden="true"></span> Chequear conexión</button>
+			<!--<button class="btn btn-default" type="button" onclick="creaDB()">creaDB</button>
+			<button class="btn btn-default" type="button" onclick="cargaDatos()">cargaDatos</button>-->
 			<div id="pedon"></div>
 			<div id="pedoff"></div>
 			<div id="log"></div>
