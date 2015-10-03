@@ -228,6 +228,14 @@ function cargaDatosSuccess(tx, results){
           </button>
           <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Pedidos de Ventas</a>
         </div>
+		<div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><button class="btn btn-info btn-xs" type="button" onclick="checkConnection()"><span class="glyphicon glyphicon-signal" aria-hidden="true"></span> Chequear conexión</button></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+		  
+        </div><!--/.nav-collapse -->		
       </div>
     </nav>
 
@@ -235,11 +243,9 @@ function cargaDatosSuccess(tx, results){
 	<div class="starter-template">
 		<ol class="breadcrumb">
 		  <li><a href="#">Ventas</a></li>
-		  <li><a href="#">Comprobantes</a></li>
 		  <li class="active">Pedidos de ventas</li>
 		</ol>
 		
-			<button class="btn btn-info" type="button" onclick="checkConnection()"><span class="glyphicon glyphicon-signal" aria-hidden="true"></span> Chequear conexión</button>
 			<!--<button class="btn btn-default" type="button" onclick="creaDB()">creaDB</button>
 			<button class="btn btn-default" type="button" onclick="cargaDatos()">cargaDatos</button>-->
 			<div id="pedon"></div>
