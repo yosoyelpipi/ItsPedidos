@@ -2,12 +2,12 @@
 <widget xmlns = "http://www.w3.org/ns/widgets"
 		xmlns:gap = "http://phonegap.com/ns/1.0"
 		id        = "com.itspedidos.app"
-		version   = "1.0.4">
+		version   = "1.0.44">
 
-	<name>ItsPed</name>
+	<name>ItsClient</name>
 
 	<description>
-	ItsPedidos.
+	ItsClient es una aplicacion que te permite grabar pedidos con tu celular en Itris Software.
 	</description>
 
 
