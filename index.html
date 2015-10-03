@@ -177,6 +177,19 @@ function cargaDatosSuccess(tx, results){
 		navigator.notification.alert("La tabla está vacía.");
 	}
 	
+
+	
+	selector.append('<table class="table">' +
+						'  <caption>Países disponibles</caption>' +
+						'  <thead>' +
+						'	<tr>' +
+						'	  <th>Código</th>' +
+						'	  <th>Descipción</th>' +
+						'	  <th>Sigla</th>' +
+						'	</tr>' +
+						'  </thead>' +
+						'  <tbody>');
+	
 	for(var i=0; i<results.rows.length; i++){
 		var paises = results.rows.item(i);
 		var selector = $('#muestroresultado');
@@ -186,6 +199,8 @@ function cargaDatosSuccess(tx, results){
 							'<td>' + paises.sigla + '</td>' +
 						'</tr>');
 	}
+	select.append('</tbody>' +
+			      '</table>');
 }	
 	</script>
 	
@@ -228,19 +243,9 @@ function cargaDatosSuccess(tx, results){
 
 			<div id="conecto" align="center"><img src="img/velocimetro.gif"></div>
 
-			<table class="table">
-				  <caption>Países disponibles</caption>
-				  <thead>
-					<tr>
-					  <th>Código</th>
-					  <th>Descipción</th>
-					  <th>Sigla</th>
-					</tr>
-				  </thead>
-				  <tbody>
+
 					<div id="muestroresultado"></div>
-				  </tbody>
-			</table>
+
 
 				
     </div>
