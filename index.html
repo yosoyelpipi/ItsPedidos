@@ -178,7 +178,7 @@ function cargaDatosSuccess(tx, results){
 	}
 	
 
-	
+	var selector = $('#muestroresultado');
 	selector.append('<table class="table">' +
 						'  <caption>Países disponibles</caption>' +
 						'  <thead>' +
@@ -192,14 +192,14 @@ function cargaDatosSuccess(tx, results){
 	
 	for(var i=0; i<results.rows.length; i++){
 		var paises = results.rows.item(i);
-		var selector = $('#muestroresultado');
+		
 		selector.append('<tr>' +
 							'<th scope="row">' + paises.id + '</th>' +
 							'<td>' + paises.descripcion + '</td>' +
 							'<td>' + paises.sigla + '</td>' +
 						'</tr>');
 	}
-	select.append('</tbody>' +
+	selector.append('</tbody>' +
 			      '</table>');
 }	
 	</script>
