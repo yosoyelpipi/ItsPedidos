@@ -1,4 +1,4 @@
-var i_log = 0;
+	var i_log = 0;
 function mkLog(text){
 	var date = new Date();
 	var txt = i_log + " - " + date.getHours() + "-" + date.getMinutes() + "-" + date.getSeconds() + ": " + text; 
@@ -11,33 +11,31 @@ function mkLog(text){
 
 
 function onBodyLoad(){
-	mkLog("Aplicación cargada y lista.");
+	//mkLog("Ejecuté el onBodyLoad");
 	document.addEventListener("deviceready", onDeviceReady, false);
 }
 
 function onDeviceReady(){
-    mkLog("Aplicación cargada y lista.");
-	
-	//inicializa la verificación de la conexión
-	checkConnection();
-    
-	//Habilita la función del botón atrás.
-	document.addEventListener("backbutton", onBackKeyDown, false);
-	
-	//Habilita la función del botón menú.
-	document.addEventListener("menubutton", onMenuKeyDown, false);
-	
+    //mkLog("Ejecuté el onDeviceReady");
 	
 	existe_db = window.localStorage.getItem("existe_db");	
 	
-	db = window.openDatabase("erp_paises", "1.0", "Paises", 200000);
+	db = window.openDatabase("erp_mobile", "1.0", "Pedidos Offline", 200000);
 	
 	if(existe_db == null){
+	    //mkLog("la BD es null");
 		creaDB();
 	}else{
+		//mkLog("la BD está kkkk");
 		cargaDatos();
 	}
 
+	//Habilita la función del botón atrás.
+	document.addEventListener("backbutton", onBackKeyDown, false);	
+
+	//Habilita la función del botón menú.
+	document.addEventListener("menubutton", onMenuKeyDown, false);	
+	
 }
 
 // Función activada. Botón Menú.
@@ -57,27 +55,23 @@ function checkConnection() {
 
             var states = {};
             states[Connection.UNKNOWN]  = 'No podemos determinar tu tipo de conexión a una red de datos.';
-            states[Connection.ETHERNET] = 'Estás conectado a la red mediante Ethernet connection, vas a poder realizar el test de conexion.';
-            states[Connection.WIFI]     = 'Estás conectado a la red mediante WiFi, vas a poder realizar el test de conexion.';
-            states[Connection.CELL_2G]  = 'Estás conectado a la red mediante Cell 2G connection, vas a poder realizar el test de conexion.';
-            states[Connection.CELL_3G]  = 'Estás conectado a la red mediante Cell 3G connection, vas a poder realizar el test de conexion.';
-            states[Connection.CELL_4G]  = 'Estás conectado a la red mediante Cell 4G connection, vas a poder realizar el test de conexion.';
-            states[Connection.CELL]     = 'Estás conectado a la red mediante Cell generic connection, podrías experimentar lentitud en la medición.';
-            states[Connection.NONE]     = '¡Atención! tu dispositivo no tiene conexion a datos, no podrás realizar el test. Activa tu conexión WiFi o vuelve en otro momento.';
+            states[Connection.ETHERNET] = 'Estás conectado a la red mediante Ethernet connection, estamos listo para sincronizar los datos.';
+            states[Connection.WIFI]     = 'Estás conectado a la red mediante WiFi, estamos listo para sincronizar los datos.';
+            states[Connection.CELL_2G]  = 'Estás conectado a la red mediante Cell 2G connection, estamos listo para sincronizar los datos.';
+            states[Connection.CELL_3G]  = 'Estás conectado a la red mediante Cell 3G connection, estamos listo para sincronizar los datos.';
+            states[Connection.CELL_4G]  = 'Estás conectado a la red mediante Cell 4G connection, estamos listo para sincronizar los datos.';
+            states[Connection.CELL]     = 'Estás conectado a la red mediante Cell generic connection, podrías experimentar lentitud en la sincronización.';
+            states[Connection.NONE]     = '¡Atención! tu dispositivo no tiene conexion a datos, no podrás sincronizar, sin embargo podrás seguir trabajando de manera offline.';
 			
 			if(navigator.network.connection.type == Connection.NONE){
 				// No tenemos conexión
-				alert('No tenés conexión LTA.');
-				$("#pedon").fadeout();
-				$("#pedoff").html('<span class="glyphicon glyphicon-volume-off" aria-hidden="true"></span> Puedo agregar pedidos e modo off line.');
+				alert(states[networkState]);
 			}else{
 				// Si tenemos conexión
-				alert('Vamoooooooooooossssss.');
-				$("#pedoff").fadeout();
-				$("#pedon").html('<span class="glyphicon glyphicon-signal" aria-hidden="true"></span> Ahora puedo sincronizar la lista de precios.');
+				alert(states[networkState]);
 			}
 			
-            alert(states[networkState]);
+            //alert(states[networkState]);
         }
 		
 /*
@@ -102,6 +96,10 @@ function creaNuevaDB(tx){
 	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (2, 'Brasil', 'BR')" );
 	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (3, 'Bolivia', 'BO')" );
 	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (4, 'Colombia', 'CO')" );
+	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (5, 'Chile', 'CH')" );
+	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (6, 'Ecuador', 'EC')" );
+	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (7, 'Paraguay', 'PY')" );
+	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (8, 'Uruguay', 'UY')" );
 }
 
 function crearSuccess(){
@@ -136,8 +134,10 @@ function cargaDatosSuccess(tx, results){
 	for(var i=0; i<results.rows.length; i++){
 		var paises = results.rows.item(i);
 		var selector = $('#muestroresultado');
-		selector.append('<p>El país es ' + paises.descripcion + '</p>' +
-		                '<p>La sigla es ' + paises.sigla + '</p>');
+		selector.append('<tr>' +
+							'<th scope="row">' + paises.id + '</th>' +
+							'<td>' + paises.descripcion + '</td>' +
+							'<td>' + paises.sigla + '</td>' +
+						'</tr>');
 	}
-	
 }	
