@@ -208,10 +208,7 @@ function cargaDatosSuccess(tx, results){
 		<div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li><button class="btn btn-info btn-xs" type="button" onclick="checkConnection()"><span class="glyphicon glyphicon-signal" aria-hidden="true"></span> Chequear conexión</button></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-		  
+          </ul>	  
         </div><!--/.nav-collapse -->		
       </div>
     </nav>
@@ -237,9 +234,49 @@ function cargaDatosSuccess(tx, results){
 				  </tbody>
 				</table>			
 			</div>
+	<hr>
+			<ol class="breadcrumb">
+			  <li><a href="#">General</a></li>
+			  <li class="active">Parámetros</li>
+			</ol>
+			<form>
+			  <div class="form-group">
+				<label for="ws"><small>Web Service</small></label>
+				<input type="text" class="form-control" id="ws" name="ws" placeholder="http://Servidor/ITSWS/ItsCliSvrWS.asmx?WSDL">
+			  </div>
+			  <div class="form-group">
+				<label for="bd"><small>Base de datos</small></label>
+				<input type="text" class="form-control" id="bd" name="bd" placeholder="BASEDEMO">
+			  </div>
+			  <div class="form-group">
+				<label for="user"><small>Usuario</small></label>
+				<input type="text" class="form-control" id="user" name="bd" placeholder="Usuario">
+			  </div>
+			  <div class="form-group">
+				<label for="pass"><small>Password</small></label>
+				<input type="password" class="form-control" id="pass" name="pass" placeholder="123456">
+			  </div>
+
+			  <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span> <small>Guardar</small></button>
+			</form>
+	<hr>
+			<ol class="breadcrumb">
+			  <li><a href="#">General</a></li>
+			  <li class="active">Descargar</li>
+			</ol>
+	<hr>
+			<ol class="breadcrumb">
+			  <li><a href="#">General</a></li>
+			  <li class="active">Pedidos</li>
+			</ol>			
+	<hr>
+			<ol class="breadcrumb">
+			  <li><a href="#">General</a></li>
+			  <li class="active">Enviar datos</li>
+			</ol>
+			
 		</div>
     </div><!-- /.container -->
-
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
