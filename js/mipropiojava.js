@@ -38,18 +38,6 @@ function onDeviceReady(){
 	
 }
 
-function datosConexion(){
-	alert('Este es el WebService: ' + window.localStorage.getItem("ws"));
-	alert('Esta es base de datos: ' + window.localStorage.getItem("bd"));
-	alert('Este es el Usuario: ' + window.localStorage.getItem("user"));
-	alert('Este es el Password: ' + window.localStorage.getItem("password"));
-
-	$('#output').html("Ws: " + window.localStorage.getItem("ws") + "<br>" +
-						"BD: " + window.localStorage.getItem("bd") + "<br>" +
-						"USer: " + window.localStorage.getItem("bd") + "<br>" +
-						"Pass: " + window.localStorage.getItem("bd") + "<br>");
-}
-
 // Función activada. Botón Menú.
 function onMenuKeyDown() {
 	alert('No hay opciones de menu disponible por el momento.');
@@ -114,27 +102,6 @@ function creaNuevaDB(tx){
 	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (8, 'Uruguay', 'UY')" );
 }
 
-/*
-	*Guardando datos en local storage
-*/
-
-function submitForm(){
-//$("#b_guardar").click(function(e){
-	
-	var webs = $("[name='ws']").val();
-	var base = $("[name='bd']").val();
-	var users = $("[name='user']").val();
-	var pass = $("[name='password']").val();
-	
-	ws = window.localStorage.setItem("ws", webs);
-	bd = window.localStorage.setItem("bd", base);
-	user = window.localStorage.setItem("user", users);
-	password = window.localStorage.setItem("password", pass);
-	
-	retun false;
-
-}
-
 function crearSuccess(){
 	cargaDatos();
 }
@@ -172,4 +139,37 @@ function cargaDatosSuccess(tx, results){
 							'<td>' + paises.sigla + '</td>' +
 						'</tr>');
 	}
-}	
+}
+
+/*
+	*Guardando datos en local storage
+*/
+
+function submitForm(){
+//$("#b_guardar").click(function(e){
+	
+	var webs = $("[name='ws']").val();
+	var base = $("[name='bd']").val();
+	var users = $("[name='user']").val();
+	var pass = $("[name='password']").val();
+	
+	ws = window.localStorage.setItem("ws", webs);
+	bd = window.localStorage.setItem("bd", base);
+	user = window.localStorage.setItem("user", users);
+	password = window.localStorage.setItem("password", pass);
+	
+	retun false;
+}
+
+function datosConexion(){
+	alert('Este es el WebService: ' + window.localStorage.getItem("ws"));
+	alert('Esta es base de datos: ' + window.localStorage.getItem("bd"));
+	alert('Este es el Usuario: ' + window.localStorage.getItem("user"));
+	alert('Este es el Password: ' + window.localStorage.getItem("password"));
+
+	$('#output').html("Ws: " + window.localStorage.getItem("ws") + "<br>" +
+						"BD: " + window.localStorage.getItem("bd") + "<br>" +
+						"USer: " + window.localStorage.getItem("bd") + "<br>" +
+						"Pass: " + window.localStorage.getItem("bd") + "<br>");
+}
+	
