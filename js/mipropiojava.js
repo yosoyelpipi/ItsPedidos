@@ -102,8 +102,17 @@ function creaNuevaDB(tx){
 	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (8, 'Uruguay', 'UY')" );
 }
 
+/*
+	*Cargando datos en local storage
+*/
+$("#b_guardar").click(function(e){
+	ws = window.localStorage.setItem("ws", $("#ws").val() );
+	bd = window.localStorage.setItem("bd", $("#bd").val() );
+	user = window.localStorage.setItem("user", $("#user").val() );
+	password = window.localStorage.setItem("password", $("#password").val() );
+});
+
 function crearSuccess(){
-	existe_db = window.localStorage.setItem("existe_db", 1);
 	cargaDatos();
 }
 
