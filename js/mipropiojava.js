@@ -105,6 +105,8 @@ function creaNuevaDB(tx){
 /*
 	*Guardando datos en local storage
 */
+
+function (checkData){
 $("#b_guardar").click(function(e){
 	
 	var webs = $("#ws").val();
@@ -123,6 +125,7 @@ $("#b_guardar").click(function(e){
 	alert('Este es el Password: ' + window.localStorage.getItem("password"));
 });
 
+};
 function crearSuccess(){
 	cargaDatos();
 }
