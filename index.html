@@ -93,7 +93,7 @@
 			  <li><a href="#">General</a></li>
 			  <li class="active">Parámetros</li>
 			</ol>
-			<form>
+			<form method="POST" onsubmit="return submitForm()">
 			  <div class="form-group">
 				<label for="ws"><small>Web Service</small></label>
 				<input type="text" class="form-control" id="ws" name="ws" placeholder="http://Servidor/ITSWS/ItsCliSvrWS.asmx?WSDL">
@@ -114,6 +114,12 @@
 			  <button type="submit" id="b_guardar" class="btn btn-default"><span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span> <small>Guardar</small></button>
 			</form>
 			<button class="btn btn-info btn-xs" type="button" onclick="checkData()"><span class="glyphicon glyphicon-signal" aria-hidden="true"></span> Chequear conexión</button>
+	<hr>
+			<ol class="breadcrumb">
+			  <li><a href="#">General</a></li>
+			  <li class="active">Parámetros</li>
+			</ol>
+			<div id="output"></div>
 	<hr>
 			<ol class="breadcrumb">
 			  <li><a href="#">General</a></li>

@@ -34,8 +34,24 @@ function onDeviceReady(){
 	document.addEventListener("backbutton", onBackKeyDown, false);	
 
 	//Habilita la función del botón menú.
-	document.addEventListener("menubutton", onMenuKeyDown, false);	
+	document.addEventListener("menubutton", onMenuKeyDown, false);
+
+	//Muestro los datos.
+	datosConexion();
 	
+}
+
+function datosConexion(){
+	alert('Este es el WebService: ' + window.localStorage.getItem("ws"));
+	alert('Esta es base de datos: ' + window.localStorage.getItem("bd"));
+	alert('Este es el Usuario: ' + window.localStorage.getItem("user"));
+	alert('Este es el Password: ' + window.localStorage.getItem("password"));
+
+	$('#output').html("Ws: " + window.localStorage.getItem("ws") + "<br>" +
+						"BD: " + window.localStorage.getItem("bd") + "<br>" +
+						"USer: " + window.localStorage.getItem("bd") + "<br>" +
+						"Pass: " + window.localStorage.getItem("bd") + "<br>" +
+	);
 }
 
 // Función activada. Botón Menú.
@@ -106,24 +122,20 @@ function creaNuevaDB(tx){
 	*Guardando datos en local storage
 */
 
-function (checkData){
-$("#b_guardar").click(function(e){
+function submitForm(){
+//$("#b_guardar").click(function(e){
 	
-	var webs = $("#ws").val();
-	var base = $("#bd").val();
-	var user = $("#user").val();
-	var pass = $("#password").val();
+	var webs = $("[name='ws']").val();
+	var base = $("[name='bd']").val();
+	var users = $("[name='user']").val();
+	var pass = $("[name='password']").val();
 	
 	ws = window.localStorage.setItem("ws", webs);
 	bd = window.localStorage.setItem("bd", base);
-	user = window.localStorage.setItem("user", user);
+	user = window.localStorage.setItem("user", users);
 	password = window.localStorage.setItem("password", pass);
 	
-	alert('Este es el WebService: ' + window.localStorage.getItem("ws"));
-	alert('Esta es base de datos: ' + window.localStorage.getItem("bd"));
-	alert('Este es el Usuario: ' + window.localStorage.getItem("user"));
-	alert('Este es el Password: ' + window.localStorage.getItem("password"));
-});
+	retun false;
 
 };
 function crearSuccess(){
