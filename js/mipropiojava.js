@@ -35,9 +35,6 @@ function onDeviceReady(){
 
 	//Habilita la función del botón menú.
 	document.addEventListener("menubutton", onMenuKeyDown, false);
-
-	//Muestro los datos.
-	datosConexion();
 	
 }
 
@@ -137,6 +134,7 @@ function submitForm(){
 	retun false;
 
 }
+
 function crearSuccess(){
 	cargaDatos();
 }
