@@ -103,13 +103,24 @@ function creaNuevaDB(tx){
 }
 
 /*
-	*Cargando datos en local storage
+	*Guardando datos en local storage
 */
 $("#b_guardar").click(function(e){
-	ws = window.localStorage.setItem("ws", $("#ws").val() );
-	bd = window.localStorage.setItem("bd", $("#bd").val() );
-	user = window.localStorage.setItem("user", $("#user").val() );
-	password = window.localStorage.setItem("password", $("#password").val() );
+	
+	var webs = $("#ws").val();
+	var base = $("#bd").val();
+	var user = $("#user").val();
+	var pass = $("#password").val();
+	
+	ws = window.localStorage.setItem("ws", webs);
+	bd = window.localStorage.setItem("bd", base);
+	user = window.localStorage.setItem("user", user);
+	password = window.localStorage.setItem("password", pass);
+	
+	alert('Este es el WebService: ' + window.localStorage.getItem("ws"));
+	alert('Esta es base de datos: ' + window.localStorage.getItem("bd"));
+	alert('Este es el Usuario: ' + window.localStorage.getItem("user"));
+	alert('Este es el Password: ' + window.localStorage.getItem("password"));
 });
 
 function crearSuccess(){
