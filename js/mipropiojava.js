@@ -149,7 +149,7 @@ function submitForm(){
 	var _webs = $("[name='ws']").val();
 	var _base = $("[name='bd']").val();
 	var _users = $("[name='user']").val();
-	var _pass = $("[name='password']").val();
+	var _pass = $("[name='pass']").val();
 	
 	ws = window.localStorage.setItem("ws", _webs);
 	bd = window.localStorage.setItem("bd", _base);
