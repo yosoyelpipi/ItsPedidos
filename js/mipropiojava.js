@@ -145,3 +145,29 @@ function cargaDatosSuccess(tx, results){
 	*Guardando datos en local storage
 */
 
+function submitForm(){
+	var _webs = $("[name='ws']").val();
+	var _base = $("[name='bd']").val();
+	var _users = $("[name='user']").val();
+	var _pass = $("[name='password']").val();
+	
+	ws = window.localStorage.setItem("ws", _webs);
+	bd = window.localStorage.setItem("bd", _base);
+	user = window.localStorage.setItem("user", _users);
+	password = window.localStorage.setItem("password", _pass);
+	
+	return false;
+}
+
+function datosConexion(){
+	alert('Este es el WebService: ' + window.localStorage.getItem("ws"));
+	alert('Esta es base de datos: ' + window.localStorage.getItem("bd"));
+	alert('Este es el Usuario: ' + window.localStorage.getItem("user"));
+	alert('Este es el Password: ' + window.localStorage.getItem("password"));
+
+	$('#output').html("Ws: " + window.localStorage.getItem("ws") + "<br>" +
+						"BD: " + window.localStorage.getItem("bd") + "<br>" +
+						"USer: " + window.localStorage.getItem("user") + "<br>" +
+						"Pass: " + window.localStorage.getItem("password") + "<br>");
+}
+	
