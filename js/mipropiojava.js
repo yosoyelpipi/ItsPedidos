@@ -50,8 +50,7 @@ function datosConexion(){
 	$('#output').html("Ws: " + window.localStorage.getItem("ws") + "<br>" +
 						"BD: " + window.localStorage.getItem("bd") + "<br>" +
 						"USer: " + window.localStorage.getItem("bd") + "<br>" +
-						"Pass: " + window.localStorage.getItem("bd") + "<br>" +
-	);
+						"Pass: " + window.localStorage.getItem("bd") + "<br>");
 }
 
 // Función activada. Botón Menú.
@@ -137,7 +136,7 @@ function submitForm(){
 	
 	retun false;
 
-};
+}
 function crearSuccess(){
 	cargaDatos();
 }
