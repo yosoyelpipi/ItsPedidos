@@ -59,7 +59,7 @@ function onMenuKeyDown() {
                     console.log("close the menu");
                     menuDiv.style.display="none";
                     menuOpen = false;
-                } else {
+                }else{
                         console.log("open the menu");
                         menuDiv.style.display="block";
                         menuOpen = true;
