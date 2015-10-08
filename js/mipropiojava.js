@@ -55,6 +55,7 @@ function onMenuKeyDown() {
   							'<li class="list-group-item">Porta ac consectetur ac</li>' +
 	  						'<li class="list-group-item">Vestibulum at eros</li>' +
 						'</ul>');*/
+	 /*
 	 if(menuOpen) {
                     console.log("close the menu");
                     menuDiv.style.display="none";
@@ -64,7 +65,7 @@ function onMenuKeyDown() {
                         menuDiv.style.display="block";
                         menuOpen = true;
                 }					
-						
+	  */					
     }
 
 function onBackKeyDown() {
