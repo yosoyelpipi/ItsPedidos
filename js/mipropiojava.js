@@ -8,11 +8,16 @@ function mkLog(text){
 }
 	var existe_db
 	var db
+	
+	var menuOpen = true;
+    var menuDiv = "";
+	menuDiv = document.querySelector("#menu");
 
 
 function onBodyLoad(){
 	//mkLog("Ejecuté el onBodyLoad");
 	document.addEventListener("deviceready", onDeviceReady, false);
+	menuDiv = document.querySelector("#menu");
 }
 
 function onDeviceReady(){
@@ -41,6 +46,25 @@ function onDeviceReady(){
 // Función activada. Botón Menú.
 function onMenuKeyDown() {
 	alert('No hay opciones de menu disponible por el momento.');
+
+		//var menu = $('#menu');
+		/*$('#menu').html('<ul class="list-group">' +
+  							'<li class="list-group-item">Cras justo odio</li>' +
+						    '<li class="list-group-item">Dapibus ac facilisis in</li>' +
+	  						'<li class="list-group-item">Morbi leo risus</li>' +
+  							'<li class="list-group-item">Porta ac consectetur ac</li>' +
+	  						'<li class="list-group-item">Vestibulum at eros</li>' +
+						'</ul>');*/
+	 if(menuOpen) {
+                    console.log("close the menu");
+                    menuDiv.style.display="none";
+                    menuOpen = false;
+                } else {
+                        console.log("open the menu");
+                        menuDiv.style.display="block";
+                        menuOpen = true;
+                }					
+						
     }
 
 function onBackKeyDown() {
