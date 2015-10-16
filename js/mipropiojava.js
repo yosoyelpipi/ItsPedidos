@@ -8,6 +8,7 @@ function mkLog(text){
 }
 	var existe_db
 	var db
+	var exite
 	
 	var menuOpen = true;
     var menuDiv = "";
@@ -17,7 +18,6 @@ function mkLog(text){
 function onBodyLoad(){
 	//mkLog("Ejecuté el onBodyLoad");
 	document.addEventListener("deviceready", onDeviceReady, false);
-	menuDiv = document.querySelector("#menu");
 }
 
 function onDeviceReady(){
@@ -42,30 +42,57 @@ function onDeviceReady(){
 	document.addEventListener("menubutton", onMenuKeyDown, false);
 	
 }
+function ShowParam(){
+	$("#menuPrincial").hide();
+	$("#bajada").html('Podrás configurar la conexión al WebService.').show();	
+	Vermenu();
+}
 
+function Vermenu(){
+		var wsS = window.localStorage.getItem("ws");
+		var bdS = window.localStorage.getItem("bd");
+		var userS = window.localStorage.getItem("user");
+		var passwordS = window.localStorage.getItem("password");
+		//alert(wsS);
+	if(wsS == ""){
+		mkLog("No de definió WS");
+		//alert('Es distinto de null');
+		$("#config").show();
+		
+		$("#wsconfig").html('<label for="ws"><small>Web Service</small></label>' +
+							'<input type="text" class="form-control" id="ws" name="ws" value="http://Servidor/ITSWS/ItsCliSvrWS.asmx?WSDL">');
+		$("#bdconfig").html('<label for="bd"><small>Base de datos</small></label>' +
+							'<input type="text" class="form-control" id="bd" name="bd" placeholder="Ej. DEMO">');
+		$("#userconfig").html('<label for="user"><small>Usuario</small></label>'+
+							  '<input type="text" class="form-control" id="user" name="user" placeholder="USER">');
+		$("#passconfig").html('<label for="pass"><small>Password</small></label>' +
+							  '<input type="password" class="form-control" id="pass" name="pass" placeholder="PASS">');
+	}else{
+		mkLog("Ya se definió el WS");
+		$("#wsconfig").html('<label for="ws"><small>Web Service</small></label>' +
+							'<input type="text" class="form-control" id="ws" name="ws" value="'+ wsS +'">');
+		$("#bdconfig").html('<label for="bd"><small>Base de datos</small></label>' +
+							'<input type="text" class="form-control" id="bd" name="bd" value="'+ bdS +'">');
+		$("#userconfig").html('<label for="user"><small>Usuario</small></label>'+
+							  '<input type="text" class="form-control" id="user" name="user" value="'+ userS +'">');
+		$("#passconfig").html('<label for="pass"><small>Password</small></label>' +
+							  '<input type="password" class="form-control" id="pass" name="pass" value="'+ passwordS +'">');
+		$("#configurado").show();
+		$("#testeer").show();		
+	}
+//	alert(window.localStorage.getItem("ws"));	
+	
+}
+
+function ShowMenu(){
+	$("#config").hide();
+	$("#bajada").hide();
+	$("#configurado").hide();
+	$("#menuPrincial").show();
+}
 // Función activada. Botón Menú.
 function onMenuKeyDown() {
-	alert('No hay opciones de menu disponible por el momento.');
-
-		//var menu = $('#menu');
-		/*$('#menu').html('<ul class="list-group">' +
-  							'<li class="list-group-item">Cras justo odio</li>' +
-						    '<li class="list-group-item">Dapibus ac facilisis in</li>' +
-	  						'<li class="list-group-item">Morbi leo risus</li>' +
-  							'<li class="list-group-item">Porta ac consectetur ac</li>' +
-	  						'<li class="list-group-item">Vestibulum at eros</li>' +
-						'</ul>');*/
-	 /*
-	 if(menuOpen) {
-                    console.log("close the menu");
-                    menuDiv.style.display="none";
-                    menuOpen = false;
-                }else{
-                        console.log("open the menu");
-                        menuDiv.style.display="block";
-                        menuOpen = true;
-                }					
-	  */					
+	alert('<small>No hay opciones de menu disponible por el momento.</small>');					
     }
 
 function onBackKeyDown() {
@@ -176,12 +203,80 @@ function submitForm(){
 	var _users = $("[name='user']").val();
 	var _pass = $("[name='pass']").val();
 	
-	ws = window.localStorage.setItem("ws", _webs);
-	bd = window.localStorage.setItem("bd", _base);
-	user = window.localStorage.setItem("user", _users);
-	password = window.localStorage.setItem("password", _pass);
+	var ws = window.localStorage.setItem("ws", _webs);
+	var bd = window.localStorage.setItem("bd", _base);
+	var user = window.localStorage.setItem("user", _users);
+	var password = window.localStorage.setItem("password", _pass);
+	alert('Los datos se han guardado correctamente.');
 	
+	$("#config").hide();
+
+	var wsS = window.localStorage.getItem("ws");
+	var bdS = window.localStorage.getItem("bd");
+	var userS = window.localStorage.getItem("user");
+	var passwordS = window.localStorage.getItem("password");
+
+	$("#configurado").show();
+	$("#testeer").show();
+	
+	$("#wsconfig").html('<label for="ws"><small>Web Service</small></label>' +
+						'<input type="text" class="form-control" id="ws" name="ws" value="'+ wsS +'">');
+	$("#bdconfig").html('<label for="bd"><small>Base de datos</small></label>' +
+						'<input type="text" class="form-control" id="bd" name="bd" value="'+ bdS +'">');
+	$("#userconfig").html('<label for="user"><small>Usuario</small></label>'+
+						  '<input type="text" class="form-control" id="user" name="user" value="'+ userS +'">');
+	$("#passconfig").html('<label for="pass"><small>Password</small></label>' +
+						  '<input type="password" class="form-control" id="pass" name="pass" value="'+ passwordS +'">');
+		
+	mkLog('Muestro el formulario con los datos cargados.');
 	return false;
+}
+
+
+function UpdateForm(){
+	var _webs = $("[name='ws']").val();
+	var _base = $("[name='bd']").val();
+	var _users = $("[name='user']").val();
+	var _pass = $("[name='pass']").val();
+	
+	var ws = window.localStorage.setItem("ws", _webs);
+	var bd = window.localStorage.setItem("bd", _base);
+	var user = window.localStorage.setItem("user", _users);
+	var password = window.localStorage.setItem("password", _pass);
+	alert('Los datos se han guardado correctamente.');
+	
+	$("#config").hide();
+
+	var wsS = window.localStorage.getItem("ws");
+	var bdS = window.localStorage.getItem("bd");
+	var userS = window.localStorage.getItem("user");
+	var passwordS = window.localStorage.getItem("password");
+
+	$("#configurado").show();
+	
+	$("#wsconfig").html('<label for="ws"><small>Web Service</small></label>' +
+						'<input type="text" class="form-control" id="ws" name="ws" value="'+ wsS +'">');
+	$("#bdconfig").html('<label for="bd"><small>Base de datos</small></label>' +
+						'<input type="text" class="form-control" id="bd" name="bd" value="'+ bdS +'">');
+	$("#userconfig").html('<label for="user"><small>Usuario</small></label>'+
+						  '<input type="text" class="form-control" id="user" name="user" value="'+ userS +'">');
+	$("#passconfig").html('<label for="pass"><small>Password</small></label>' +
+						  '<input type="password" class="form-control" id="pass" name="pass" value="'+ passwordS +'">');
+	$("#testeer").show();
+		
+	mkLog('Update del formulario realizado con éxito.');
+	return false;
+}
+
+
+function Cleaner(){
+    var ws = window.localStorage.setItem("ws", "");
+	var bd = window.localStorage.setItem("bd", "");
+	var user = window.localStorage.setItem("user", "");
+	var password = window.localStorage.setItem("password", "");
+	$("#configurado").hide();
+	$("#testeer").hide();
+	$("#config").show();
 }
 
 function datosConexion(){
@@ -190,9 +285,9 @@ function datosConexion(){
 	alert('Este es el Usuario: ' + window.localStorage.getItem("user"));
 	alert('Este es el Password: ' + window.localStorage.getItem("password"));
 
-	$('#output').html("Ws: " + window.localStorage.getItem("ws") + "<br>" +
-						"BD: " + window.localStorage.getItem("bd") + "<br>" +
-						"USer: " + window.localStorage.getItem("user") + "<br>" +
-						"Pass: " + window.localStorage.getItem("password") + "<br>");
+	//$('#output').html("Ws: " + window.localStorage.getItem("ws") + "<br>" +
+	//					"BD: " + window.localStorage.getItem("bd") + "<br>" +
+	//					"USer: " + window.localStorage.getItem("user") + "<br>" +
+	//					"Pass: " + window.localStorage.getItem("password") + "<br>");
 }
 	
