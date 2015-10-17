@@ -48,6 +48,24 @@ function ShowParam(){
 	Vermenu();
 }
 
+function ShowMenu(){
+	$("#config").hide();
+	$("#bajada").hide();
+	$("#configurado").hide();
+	$("#menuPrincial").show();
+}
+
+function ShowDownload(){
+	$("#menuPrincial").hide();
+	$("#bajada").html('Panel de sincronización.').show();
+	$("#download").show();	
+	}
+
+function HideDownload(){
+	$("#download").hide();
+	$("#menuPrincial").show();
+	}	
+
 function Vermenu(){
 		var wsS = window.localStorage.getItem("ws");
 		var bdS = window.localStorage.getItem("bd");
@@ -84,12 +102,6 @@ function Vermenu(){
 	
 }
 
-function ShowMenu(){
-	$("#config").hide();
-	$("#bajada").hide();
-	$("#configurado").hide();
-	$("#menuPrincial").show();
-}
 // Función activada. Botón Menú.
 function onMenuKeyDown() {
 	alert('<small>No hay opciones de menu disponible por el momento.</small>');					
