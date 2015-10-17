@@ -9,6 +9,7 @@ function mkLog(text){
 	var existe_db
 	var db
 	var exite
+	var fua_cli
 	
 	var menuOpen = true;
     var menuDiv = "";

@@ -29,7 +29,7 @@ $client = new nusoap_client($ws,true);
 					//echo json_encode(array("ItsLoginResult"=>$error, "session"=>$session));
 //Recupero las empresas:
 //"EMAIL = '".$email."'"
-					$empresas = $client->call('ItsGetData', array('UserSession' => $session, 'ItsClassName' => 'ERP_EMPRESAS', 'RecordCount' => '5', 'SQLFilter'=>'CLIENTE=1'  , 'SQLSort'=> '') );
+					$empresas = $client->call('ItsGetData', array('UserSession' => $session, 'ItsClassName' => 'ERP_EMPRESAS', 'RecordCount' => '2', 'SQLFilter'=>'CLIENTE=1'  , 'SQLSort'=> '') );
 					$ItsGetDataResult = $empresas['ItsGetDataResult'];
 					$LastErro = $client->call('ItsGetLastError', array('UserSession' => $session) );
 					//echo $err = utf8_encode($LastErro['Error']);
@@ -37,17 +37,27 @@ $client = new nusoap_client($ws,true);
 
 					$erp_empresas=simplexml_load_string($XMLData) or die("Error: Cannot create object");
 
-					$array = json_decode( json_encode($erp_empresas) , 1);
+					//$array = json_decode(json_encode($erp_empresas),1);
+					$array = json_decode(json_encode($erp_empresas),1);
 				
 					//Ahora comienzo a recorrer el XML para mostrar los atributos por pantalla.
 					$langs = $array['ROWDATA']['ROW'];
-					
+					print_r($langs);
 					//echo sizeof($langs);
 					$data = array();
+					
+					$medida = sizeof($langs);
+					
+					echo '<h1>Esto es la medida:'.$medida.'</h1>';
 					//Mediante el bucle for puedo recorrer todo el XML.
-					for ($i=0; $i<sizeof($langs); $i++) {
+					for ($i=0; $i<$medida; $i++) {
+						echo '<h1>Este es el valor de i: '.$i.'</h1>';
 						//echo "<br>Empresas: ".$langs[$i]['@attributes']['ID']."- ".$langs[$i]['@attributes']['DESCRIPCION']." - ".$langs[$i]['@attributes']['WEBSITE']."<br>";
-					 $data[] = array('ID'=>$langs[$i]['@attributes']['ID'], 'DESCRIPCION'=>$langs[$i]['@attributes']['DESCRIPCION'], 'TE'=>$langs[$i]['@attributes']['TE'], 'EMAIL'=>$langs[$i]['@attributes']['NUM_DOC']);	
+					if($medida == 1){
+						$data[] = array('ID'=>$langs['@attributes']['ID'], 'DESCRIPCION'=>$langs['@attributes']['DESCRIPCION'], 'TE'=>$langs['@attributes']['TE'], 'EMAIL'=>$langs['@attributes']['NUM_DOC']);		
+					}else{
+						$data[] = array('ID'=>$langs[$i]['@attributes']['ID'], 'DESCRIPCION'=>$langs[$i]['@attributes']['DESCRIPCION'], 'TE'=>$langs[$i]['@attributes']['TE'], 'EMAIL'=>$langs[$i]['@attributes']['NUM_DOC']);	
+					}
 					//echo json_encode(array("ItsLoginResult"=>$error, "motivo"=>$err));
 						/*$datos = 	array('ID'=>$langs[$i]['@attributes']['ID'],
 										  'DESCRIPCION'=>$langs[$i]['@attributes']['DESCRIPCION'],

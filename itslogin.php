@@ -30,6 +30,7 @@ $client = new nusoap_client($ws,true);
 				  //echo json_encode(array("valor"=>$value, "TimeOut"=>"oK:".$url) );
 				}else{
 					echo json_encode(array("ItsLoginResult"=>$error, "session"=>$session));
+					$LogOut = $client->call('ItsLogout', array('UserSession' => $session) );
 				}				
 	}	
 ?>
