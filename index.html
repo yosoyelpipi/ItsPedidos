@@ -67,8 +67,11 @@
 			$("#clientesDown").click(function(){
 			$("#estadodown").show();
 			//Para la pimera ejecución, entonces controlo si está declarada o no.
-			fua_cli = window.localStorage.getItem("fua_cli");
-			var fec_ult_act_cli = fua_cli;
+			if(!fua_cli){
+				var fec_ult_act_cli = '';
+			}else{
+				var fec_ult_act_cli = fua_cli;
+			}
 				$.getJSON("http://leocondori.com.ar/app/local/downloadclient.php", {ws: WebService, base: BaseDeDatos, usuario: Usuario, pass: Clave, fua_cliente: fec_ult_act_cli}, ItsDownloadClient, "json");
 			})
 //FIN: Sincronizo clientes
@@ -77,8 +80,11 @@
 			$("#LisPre").click(function(){
 			$("#estadodown").show();
 			//Para la pimera ejecución, entonces controlo si está declarada o no.
-			fua_precios = window.localStorage.getItem("fua_precios");
-			var fec_ult_act_pre = fua_precios;
+			if(!fua_precios){
+				var fec_ult_act_pre = '';
+			}else{
+				var fec_ult_act_pre = fua_precios;
+			}
 				$.getJSON("http://leocondori.com.ar/app/local/erp_pre_ven.php", {ws: WebService, base: BaseDeDatos, usuario: Usuario, pass: Clave, fua_pre: fec_ult_act_pre}, ItsErpPreVen, "json");
 			})
 //FIN: Sincronizar listas de precios.			
