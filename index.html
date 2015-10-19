@@ -67,6 +67,7 @@
 			$("#clientesDown").click(function(){
 			$("#estadodown").show();
 			//Para la pimera ejecución, entonces controlo si está declarada o no.
+			fua_cli = window.localStorage.getItem("fua_cli");
 			if(!fua_cli){
 				var fec_ult_act_cli = '';
 			}else{
@@ -80,6 +81,7 @@
 			$("#LisPre").click(function(){
 			$("#estadodown").show();
 			//Para la pimera ejecución, entonces controlo si está declarada o no.
+			fua_precios = window.localStorage.getItem("fua_precios");
 			if(!fua_precios){
 				var fec_ult_act_pre = '';
 			}else{
