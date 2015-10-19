@@ -59,28 +59,33 @@ function ShowMenu(){
 
 function ShowDownload(){
 	
-	//var networkState = navigator.connection.type;
-	//var states = {};
-	//states[Connection.UNKNOWN]  = 'No podemos determinar tu tipo de conexión a una red de datos.';
-	//states[Connection.ETHERNET] = 'Estás conectado a la red mediante Ethernet connection, estamos listo para sincronizar los datos.';
-	//states[Connection.WIFI]     = 'Estás conectado a la red mediante WiFi, estamos listo para sincronizar los datos.';
-	//states[Connection.CELL_2G]  = 'Estás conectado a la red mediante Cell 2G connection, estamos listo para sincronizar los datos.';
-	//states[Connection.CELL_3G]  = 'Estás conectado a la red mediante Cell 3G connection, estamos listo para sincronizar los datos.';
-	//states[Connection.CELL_4G]  = 'Estás conectado a la red mediante Cell 4G connection, estamos listo para sincronizar los datos.';
-	//states[Connection.CELL]     = 'Estás conectado a la red mediante Cell generic connection, podrías experimentar lentitud en la sincronización.';
-	//states[Connection.NONE]     = '¡Atención! tu dispositivo no tiene conexion a datos, no podrás sincronizar, sin embargo podrás seguir trabajando de manera offline.';
+	var networkState = navigator.connection.type;
+	var states = {};
+	states[Connection.UNKNOWN]  = 'No podemos determinar tu tipo de conexión a una red de datos.';
+	states[Connection.ETHERNET] = 'Estás conectado a la red mediante Ethernet connection, estamos listo para sincronizar los datos.';
+	states[Connection.WIFI]     = 'Estás conectado a la red mediante WiFi, estamos listo para sincronizar los datos.';
+	states[Connection.CELL_2G]  = 'Estás conectado a la red mediante Cell 2G connection, estamos listo para sincronizar los datos.';
+	states[Connection.CELL_3G]  = 'Estás conectado a la red mediante Cell 3G connection, estamos listo para sincronizar los datos.';
+	states[Connection.CELL_4G]  = 'Estás conectado a la red mediante Cell 4G connection, estamos listo para sincronizar los datos.';
+	states[Connection.CELL]     = 'Estás conectado a la red mediante Cell generic connection, podrías experimentar lentitud en la sincronización.';
+	states[Connection.NONE]     = '¡Atención! tu dispositivo no tiene conexion a datos, no podrás sincronizar, sin embargo podrás seguir trabajando de manera offline.';
 	
-		//if(navigator.network.connection.type == Connection.WIFI){
+		if(navigator.network.connection.type == Connection.WIFI){
 			// No tenemos conexión
 			//alert(states[networkState]);
-			$("#menuPrincial").hide();
-			$("#bajada").html('Panel de sincronización.').show();
-			$("#download").show();
-		//}else{
+			var existe = window.localStorage.getItem("ws");
+			if(!existe){
+					alert('Si bien detectamos que tu dispositivo tiene Wi-Fi, parece que aún no definiste los parámetros de conexión. Andá a la sección configuración y volvé por aquí.');
+			}else{
+					$("#menuPrincial").hide();
+					$("#bajada").html('Panel de sincronización.').show();
+					$("#download").show();
+			}
+		}else{
 			// Si tenemos conexión
 			//alert(states[networkState]);
-			//alert('Detectamos que no estás conectado a ninguna red Wi-Fi, no podés acceder a la sección [Descargas] ');
-		//}	
+			alert('Detectamos que no estás conectado a ninguna red Wi-Fi, conectate a alguna red disponible y volvé por acá');
+		}	
 	}
 
 function HideDownload(){
@@ -94,8 +99,9 @@ function Vermenu(){
 		var userS = window.localStorage.getItem("user");
 		var passwordS = window.localStorage.getItem("password");
 		//alert(wsS);
-	if(wsS == ""){
+	if(!wsS){
 		mkLog("No de definió WS");
+		mkLog(wsS);
 		//alert('Es distinto de null');
 		$("#config").show();
 		
@@ -244,7 +250,8 @@ function submitForm(){
 	alert('Los datos se han guardado correctamente.');
 	
 	$("#config").hide();
-
+    location.reload();
+	/*
 	var wsS = window.localStorage.getItem("ws");
 	var bdS = window.localStorage.getItem("bd");
 	var userS = window.localStorage.getItem("user");
@@ -263,6 +270,8 @@ function submitForm(){
 						  '<input type="password" class="form-control" id="pass" name="pass" value="'+ passwordS +'">');
 		
 	mkLog('Muestro el formulario con los datos cargados.');
+	*/
+	
 	return false;
 }
 
@@ -304,13 +313,20 @@ function UpdateForm(){
 
 
 function Cleaner(){
-    var ws = window.localStorage.setItem("ws", "");
-	var bd = window.localStorage.setItem("bd", "");
-	var user = window.localStorage.setItem("user", "");
-	var password = window.localStorage.setItem("password", "");
-	$("#configurado").hide();
-	$("#testeer").hide();
-	$("#config").show();
+	
+	if( confirm("Realmente deseas borrar los datos de conexión al WebService? Tené en cuenta que no vas a poder cargar o generar pedidos ni sincronizar datos.") )
+            {
+			var ws = window.localStorage.setItem("ws", "");
+			var bd = window.localStorage.setItem("bd", "");
+			var user = window.localStorage.setItem("user", "");
+			var password = window.localStorage.setItem("password", "");
+			$("#configurado").hide();
+			$("#testeer").hide();
+			$("#config").show();
+			mkLog('Borraste los datos de conexión');
+			alert('Borraste los datos de conexión');
+			location.reload();
+			}
 }
 
 function datosConexion(){
