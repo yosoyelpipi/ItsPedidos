@@ -8,7 +8,7 @@ $ws = $_GET["ws"];
 $bd = $_GET["base"];
 $user = $_GET["usuario"];
 $pass = $_GET["pass"];
-$fua = $_GET["fua_cliente"];
+$fua = $_GET["fua_pre"];
 
 /*
 $ws = "http://200.55.245.171:3000/ITSWS/ItsCliSvrWS.asmx?WSDL";
@@ -33,7 +33,7 @@ $client = new nusoap_client($ws,true);
 					echo json_encode(array("ItsLoginResult"=>$error, "motivo"=>$err));
 				}else{
 					//echo json_encode(array("ItsLoginResult"=>$error, "session"=>$session));
-				$empresas = $client->call('ItsGetData', array('UserSession' => $session, 'ItsClassName' => 'ERP_EMPRESAS', 'RecordCount' => '-1', 'SQLFilter'=>"FEC_ULT_ACT > '".$fua."' and _ERP_HAB_MOBILE = 1 " , 'SQLSort'=> '') );
+				$empresas = $client->call('ItsGetData', array('UserSession' => $session, 'ItsClassName' => 'ERP_PRE_VEN', 'RecordCount' => '-1', 'SQLFilter'=>"FEC_ULT_ACT > '".$fua."'" , 'SQLSort'=> '') );
 				$ItsGetDataResult = $empresas["ItsGetDataResult"];
 				$DataEmpresas = $empresas["XMLData"];
 
@@ -50,9 +50,9 @@ $client = new nusoap_client($ws,true);
 								if($count==''){$counts=0;} 
 								for ($i=0; $i<sizeof($langs); $i++) {
 if($count == 1){
-$datos = array('ID'=>$langs['@attributes']['ID'],'DESCRIPCION'=>$langs['@attributes']['DESCRIPCION'],'TE'=>$langs['@attributes']['TE'],'NUM_DOC'=>$langs['@attributes']['NUM_DOC']);
+$datos = array('ID'=>$langs['@attributes']['ID'],'DES_ART'=>$langs['@attributes']['DES_ART'],'PRECIO'=>$langs['@attributes']['PRECIO'] );
 }else{
-$datos = array('ID'=>$langs[$i]['@attributes']['ID'],'DESCRIPCION'=>$langs[$i]['@attributes']['DESCRIPCION'],'TE'=>$langs[$i]['@attributes']['TE'],'NUM_DOC'=>$langs[$i]['@attributes']['NUM_DOC']);
+$datos = array('ID'=>$langs[$i]['@attributes']['ID'],'DES_ART'=>$langs[$i]['@attributes']['DES_ART'],'PRECIO'=>$langs[$i]['@attributes']['PRECIO'] );
 }									
 									$salida[] = $datos;
 								}

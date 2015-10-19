@@ -10,6 +10,7 @@ function mkLog(text){
 	var db
 	var exite
 	var fua_cli
+	var fua_precios
 	
 	var menuOpen = true;
     var menuDiv = "";
@@ -57,9 +58,29 @@ function ShowMenu(){
 }
 
 function ShowDownload(){
-	$("#menuPrincial").hide();
-	$("#bajada").html('Panel de sincronización.').show();
-	$("#download").show();	
+	
+	var networkState = navigator.connection.type;
+	var states = {};
+	states[Connection.UNKNOWN]  = 'No podemos determinar tu tipo de conexión a una red de datos.';
+	states[Connection.ETHERNET] = 'Estás conectado a la red mediante Ethernet connection, estamos listo para sincronizar los datos.';
+	states[Connection.WIFI]     = 'Estás conectado a la red mediante WiFi, estamos listo para sincronizar los datos.';
+	states[Connection.CELL_2G]  = 'Estás conectado a la red mediante Cell 2G connection, estamos listo para sincronizar los datos.';
+	states[Connection.CELL_3G]  = 'Estás conectado a la red mediante Cell 3G connection, estamos listo para sincronizar los datos.';
+	states[Connection.CELL_4G]  = 'Estás conectado a la red mediante Cell 4G connection, estamos listo para sincronizar los datos.';
+	states[Connection.CELL]     = 'Estás conectado a la red mediante Cell generic connection, podrías experimentar lentitud en la sincronización.';
+	states[Connection.NONE]     = '¡Atención! tu dispositivo no tiene conexion a datos, no podrás sincronizar, sin embargo podrás seguir trabajando de manera offline.';
+	
+		if(navigator.network.connection.type == Connection.WIFI){
+			// No tenemos conexión
+			//alert(states[networkState]);
+			$("#menuPrincial").hide();
+			$("#bajada").html('Panel de sincronización.').show();
+			$("#download").show();
+		}else{
+			// Si tenemos conexión
+			//alert(states[networkState]);
+			alert('Detectamos que no estás conectado a ninguna red Wi-Fi, no podés acceder a la sección [Descargas] ');
+		}	
 	}
 
 function HideDownload(){

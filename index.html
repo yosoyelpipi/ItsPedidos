@@ -46,6 +46,11 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function(){
+		    var WebService = window.localStorage.getItem("ws");
+			var BaseDeDatos = window.localStorage.getItem("bd");
+			var Usuario = window.localStorage.getItem("user");
+			var Clave = window.localStorage.getItem("password");
+			fua_cli = window.localStorage.getItem("fua_cli");
 			
 			$("#conexion").click(function(){
 			    var url = 'http://200.55.2171:3000/ITSWS/ItsCliSvrWS.asmx?WSDL';
@@ -54,34 +59,35 @@
 				$.getJSON("http://leocondori.com.ar/app/local/testws.php", {ws: url, precio: 20}, resultConn, "json");
 				})
 			$("#testlogin").click(function(){
-			$("#estado").show();
-			var WebService = window.localStorage.getItem("ws");
-			var BaseDeDatos = window.localStorage.getItem("bd");
-			var Usuario = window.localStorage.getItem("user");
-			var Clave = window.localStorage.getItem("password");			
+			$("#estado").show();		
 				$.getJSON("http://leocondori.com.ar/app/local/itslogin.php", {ws: WebService, base: BaseDeDatos, usuario: Usuario, pass: Clave}, ItsLogin, "json");
 			})
 
+//Sincronizo clientes:			
 			$("#clientesDown").click(function(){
 			$("#estadodown").show();
-			var WebService = window.localStorage.getItem("ws");
-			var BaseDeDatos = window.localStorage.getItem("bd");
-			var Usuario = window.localStorage.getItem("user");
-			var Clave = window.localStorage.getItem("password");
-			fua_cli = window.localStorage.getItem("fua_cli");			
-			
-				if(fua_cli == undefined){
-					//alert('Es undefined, mira: ' + fua_cli);
-					var fec_ult_act_cli = '';
-				}else{
-					//alert('Tiene algo, mira: ' + fua_cli);
-					var fec_ult_act_cli = fua_cli;
-				}
-			
+			//Para la pimera ejecución, entonces controlo si está declarada o no.
+			fua_cli = window.localStorage.getItem("fua_cli");
+			var fec_ult_act_cli = fua_cli;
 				$.getJSON("http://leocondori.com.ar/app/local/downloadclient.php", {ws: WebService, base: BaseDeDatos, usuario: Usuario, pass: Clave, fua_cliente: fec_ult_act_cli}, ItsDownloadClient, "json");
-			})			
+			})
+//FIN: Sincronizo clientes
+
+//Sincronizo lista de precios:
+			$("#LisPre").click(function(){
+			$("#estadodown").show();
+			//Para la pimera ejecución, entonces controlo si está declarada o no.
+			fua_precios = window.localStorage.getItem("fua_precios");
+			var fec_ult_act_pre = fua_precios;
+				$.getJSON("http://leocondori.com.ar/app/local/erp_pre_ven.php", {ws: WebService, base: BaseDeDatos, usuario: Usuario, pass: Clave, fua_pre: fec_ult_act_pre}, ItsErpPreVen, "json");
+			})
+//FIN: Sincronizar listas de precios.			
+			
+//Fin del script.			
 		});
-		
+
+//********************INICIO DE FUNCIONES *************************		
+//FUCIONES		
 		function resultConn(respuesta){
 			if (respuesta.valor == 1){
 				$("#estado").hide();				   
@@ -120,12 +126,41 @@
 						$("#instala").html('<span class="label label-default">¡Genial! se han sincronizado ' + Response.Data.length + ' registros.</span><br>');
 						window.localStorage.setItem("fua_cli", Response.ItsGetDate);
 						$("#instala").append('<span class="label label-success">Fecha de última actualización: ' + Response.ItsGetDate + '</span>');
-						console.log('Fecha de última actualización:' + Response.ItsGetDate);	
+						console.log('Fecha de última actualización:' + Response.ItsGetDate);
+						//$("#instala").fadeOut(10000);						
 					}else{
 						$("#instala").html('<span class="label label-info">Tenés el maestro de empresas actualizado</span><br>');
+						$("#instala").fadeOut(10000);
+					}
+			}
+		}
+
+		function ItsErpPreVen(Response){
+			if (Response.ItsLoginResult == 1){
+				$("#estadodown").hide();				   
+				alert('Error : ' + Response.motivo);
+			}else{
+					$("#estadodown").hide();
+					$("#instala").show();
+					
+					if(Response.Cantidad != 0){
+						for(x=0; x<Response.Data.length; x++) {
+								console.log('Esto es el ID: '+ Response.Data[x]["ID"]);
+								console.log('Esto es la DESCRIPCIÓN: '+ Response.Data[x]["DES_ART"]);
+								console.log('Esto es el PRECIO: '+ Response.Data[x]["PRECIO"]);
+							}
+						$("#instala").html('<span class="label label-default">¡Genial! se han sincronizado ' + Response.Data.length + ' registros.</span><br>');
+						window.localStorage.setItem("fua_precios", Response.ItsGetDate);
+						$("#instala").append('<span class="label label-success">Fecha de última actualización: ' + Response.ItsGetDate + '</span>');
+						console.log('Fecha de última actualización:' + Response.ItsGetDate);
+						//$("#instala").fadeOut(10000);						
+					}else{
+						$("#instala").html('<span class="label label-info">Tenés la lista de precios actualizada.</span><br>');
+						$("#instala").fadeOut(10000);
 					}
 			}
 		}		
+		
 	</script>	
 	
 
@@ -262,7 +297,7 @@
 	
 	<div id="download">
 		<button type="button" id="clientesDown" class="btn btn-default btn-lg btn-block"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Clientes</button>
-		<button type="button" class="btn btn-default btn-lg btn-block"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Lista de precios</button>
+		<button type="button" id="LisPre" class="btn btn-default btn-lg btn-block"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Lista de precios</button>
 		<br>
 		<div id="instala"></div>
 		<div id="estadodown"><img src="img/juego-chrome.gif" width="100%"><br></div>
