@@ -48,13 +48,17 @@ $client = new nusoap_client($ws,true);
 								$langs = $array['ROWDATA']['ROW'];
 								$count = sizeof($langs);
 								if($count==''){$counts=0;} 
-								for ($i=0; $i<sizeof($langs); $i++) {
+								for ($i=0; $i<sizeof($langs); $i++) {							
 if($count == 1){
-$datos = array('ID'=>$langs['@attributes']['ID'],'DES_ART'=>$langs['@attributes']['DES_ART'],'PRECIO'=>$langs['@attributes']['PRECIO'] );
+									$cadena = $langs['@attributes']['DES_ART'];
+									$des_art = str_replace("'", "", $cadena);	
+$datos = array('ID'=>$langs['@attributes']['ID'],'FK_ERP_ARTICULOS'=>$langs['@attributes']['FK_ERP_ARTICULOS'],'DES_ART'=>$des_art,'PRECIO'=>$langs['@attributes']['PRECIO'] );
 }else{
-$datos = array('ID'=>$langs[$i]['@attributes']['ID'],'DES_ART'=>$langs[$i]['@attributes']['DES_ART'],'PRECIO'=>$langs[$i]['@attributes']['PRECIO'] );
+									$cadena = $langs[$i]['@attributes']['DES_ART'];
+									$des_art = str_replace("'", "", $cadena);
+$datos = array('ID'=>$langs[$i]['@attributes']['ID'],'FK_ERP_ARTICULOS'=>$langs[$i]['@attributes']['FK_ERP_ARTICULOS'],'DES_ART'=>$des_art,'PRECIO'=>$langs[$i]['@attributes']['PRECIO'] );
 }									
-									$salida[] = $datos;
+								$salida[] = $datos;
 								}
 								echo json_encode(array("ItsLoginResult"=>$ItsGetDataResult, "ItsGetDate"=>$ItsGetDate, "Cantidad"=>$counts, "Data"=>$salida));
 								$LogOut = $client->call('ItsLogout', array('UserSession' => $session) );

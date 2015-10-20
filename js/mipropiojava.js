@@ -18,22 +18,22 @@ function mkLog(text){
 
 
 function onBodyLoad(){
-	//mkLog("Ejecuté el onBodyLoad");
+	mkLog("Ejecuté el onBodyLoad");
 	document.addEventListener("deviceready", onDeviceReady, false);
 }
 
 function onDeviceReady(){
-    //mkLog("Ejecuté el onDeviceReady");
+    mkLog("Ejecuté el onDeviceReady");
 	
 	existe_db = window.localStorage.getItem("existe_db");	
 	
-	db = window.openDatabase("erp_mobile", "1.0", "Pedidos Offline", 200000);
+	db = window.openDatabase("ANDROID", "1.0", "Pedidos Offline", 200000);
 	
 	if(existe_db == null){
-	    //mkLog("la BD es null");
+	    mkLog("la BD es null");
 		creaDB();
 	}else{
-		//mkLog("la BD está kkkk");
+		mkLog("la BD está definida");
 		cargaDatos();
 	}
 
@@ -59,7 +59,7 @@ function ShowMenu(){
 
 function ShowDownload(){
 	
-	var networkState = navigator.connection.type;
+	/*var networkState = navigator.connection.type;
 	var states = {};
 	states[Connection.UNKNOWN]  = 'No podemos determinar tu tipo de conexión a una red de datos.';
 	states[Connection.ETHERNET] = 'Estás conectado a la red mediante Ethernet connection, estamos listo para sincronizar los datos.';
@@ -68,24 +68,24 @@ function ShowDownload(){
 	states[Connection.CELL_3G]  = 'Estás conectado a la red mediante Cell 3G connection, estamos listo para sincronizar los datos.';
 	states[Connection.CELL_4G]  = 'Estás conectado a la red mediante Cell 4G connection, estamos listo para sincronizar los datos.';
 	states[Connection.CELL]     = 'Estás conectado a la red mediante Cell generic connection, podrías experimentar lentitud en la sincronización.';
-	states[Connection.NONE]     = '¡Atención! tu dispositivo no tiene conexion a datos, no podrás sincronizar, sin embargo podrás seguir trabajando de manera offline.';
+	states[Connection.NONE]     = '¡Atención! tu dispositivo no tiene conexion a datos, no podrás sincronizar, sin embargo podrás seguir trabajando de manera offline.';*/
 	
-		if(navigator.network.connection.type == Connection.WIFI){
+		//if(navigator.network.connection.type == Connection.WIFI){
 			// No tenemos conexión
 			//alert(states[networkState]);
-			var existe = window.localStorage.getItem("ws");
-			if(!existe){
-					alert('Si bien detectamos que tu dispositivo tiene Wi-Fi, parece que aún no definiste los parámetros de conexión. Andá a la sección configuración y volvé por aquí.');
-			}else{
+			//var existe = window.localStorage.getItem("ws");
+			//if(!existe){
+				//	alert('Si bien detectamos que tu dispositivo tiene Wi-Fi, parece que aún no definiste los parámetros de conexión. Andá a la sección configuración y volvé por aquí.');
+			//}else{
 					$("#menuPrincial").hide();
 					$("#bajada").html('Panel de sincronización.').show();
 					$("#download").show();
-			}
-		}else{
+			//}
+		//}else{
 			// Si tenemos conexión
 			//alert(states[networkState]);
-			alert('Detectamos que no estás conectado a ninguna red Wi-Fi, conectate a alguna red disponible y volvé por acá');
-		}	
+			//alert('Detectamos que no estás conectado a ninguna red Wi-Fi, conectate a alguna red disponible y volvé por acá');
+		//}	
 	}
 
 function HideDownload(){
@@ -177,13 +177,34 @@ function creaNuevaDB(tx){
 	mkLog("Creando base de datos.");
 	
 	tx.executeSql('DROP TABLE IF EXISTS erp_paises');
+	//Creo la empresa ERP_PAISES
 	var sql = "CREATE TABLE IF NOT EXISTS erp_paises ( " +
 	          "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
 			  "descripcion VARCHAR(50)," +
-			  "sigla VARCHAR(5) )";
-			  
+			  "sigla VARCHAR(5) )";			  
 	tx.executeSql(sql);
-
+	
+	//Creo la tabla ERP_EMPRESAS
+	tx.executeSql('DROP TABLE IF EXISTS erp_empresas');
+	var empresas = "CREATE TABLE IF NOT EXISTS erp_empresas ( " +
+		  		   "id VARCHAR(50) PRIMARY KEY, " +
+		    	   "descripcion VARCHAR(100)," +
+				   "te VARCHAR(30)," +
+		           "num_doc VARCHAR(13) )";
+	console.log('Creé la tabla ERP_EMPRESAS');			   
+	tx.executeSql(empresas);
+	
+	tx.executeSql('DROP TABLE IF EXISTS erp_pre_ven');
+	var precios = "CREATE TABLE IF NOT EXISTS erp_pre_ven ( " +
+		  		   "id VARCHAR(50) PRIMARY KEY, " +
+		    	   "fk_erp_articulos VARCHAR(50)," +
+		    	   "des_art VARCHAR(40)," +				   
+		           "precio NUMERIC(10,4) )";
+	tx.executeSql(precios);
+	
+	//Marco a la aplicación para que sepa que la base de datos ya está creada.
+	window.localStorage.setItem("existe_db", 1);
+	
 	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (1, 'Argentina', 'AR')" );
 	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (2, 'Brasil', 'BR')" );
 	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (3, 'Bolivia', 'BO')" );
@@ -195,13 +216,15 @@ function creaNuevaDB(tx){
 }
 
 function crearSuccess(){
-	cargaDatos();
+	cargaDatos();	
 }
 
 function errorDB(err){
 	mkLog("Error procesando SQL:" + err.code);
 	navigator.notification.alert("Error procesando SQL:" + err.code);
 }
+
+
 
 /*
 *Cargar desde la base de datos
@@ -251,66 +274,8 @@ function submitForm(){
 	
 	$("#config").hide();
     location.reload();
-	/*
-	var wsS = window.localStorage.getItem("ws");
-	var bdS = window.localStorage.getItem("bd");
-	var userS = window.localStorage.getItem("user");
-	var passwordS = window.localStorage.getItem("password");
-
-	$("#configurado").show();
-	$("#testeer").show();
-	
-	$("#wsconfig").html('<label for="ws"><small>Web Service</small></label>' +
-						'<input type="text" class="form-control" id="ws" name="ws" value="'+ wsS +'">');
-	$("#bdconfig").html('<label for="bd"><small>Base de datos</small></label>' +
-						'<input type="text" class="form-control" id="bd" name="bd" value="'+ bdS +'">');
-	$("#userconfig").html('<label for="user"><small>Usuario</small></label>'+
-						  '<input type="text" class="form-control" id="user" name="user" value="'+ userS +'">');
-	$("#passconfig").html('<label for="pass"><small>Password</small></label>' +
-						  '<input type="password" class="form-control" id="pass" name="pass" value="'+ passwordS +'">');
-		
-	mkLog('Muestro el formulario con los datos cargados.');
-	*/
-	
 	return false;
 }
-
-
-function UpdateForm(){
-	var _webs = $("[name='ws']").val();
-	var _base = $("[name='bd']").val();
-	var _users = $("[name='user']").val();
-	var _pass = $("[name='pass']").val();
-	
-	var ws = window.localStorage.setItem("ws", _webs);
-	var bd = window.localStorage.setItem("bd", _base);
-	var user = window.localStorage.setItem("user", _users);
-	var password = window.localStorage.setItem("password", _pass);
-	alert('Los datos se han guardado correctamente.');
-	
-	$("#config").hide();
-
-	var wsS = window.localStorage.getItem("ws");
-	var bdS = window.localStorage.getItem("bd");
-	var userS = window.localStorage.getItem("user");
-	var passwordS = window.localStorage.getItem("password");
-
-	$("#configurado").show();
-	
-	$("#wsconfig").html('<label for="ws"><small>Web Service</small></label>' +
-						'<input type="text" class="form-control" id="ws" name="ws" value="'+ wsS +'">');
-	$("#bdconfig").html('<label for="bd"><small>Base de datos</small></label>' +
-						'<input type="text" class="form-control" id="bd" name="bd" value="'+ bdS +'">');
-	$("#userconfig").html('<label for="user"><small>Usuario</small></label>'+
-						  '<input type="text" class="form-control" id="user" name="user" value="'+ userS +'">');
-	$("#passconfig").html('<label for="pass"><small>Password</small></label>' +
-						  '<input type="password" class="form-control" id="pass" name="pass" value="'+ passwordS +'">');
-	$("#testeer").show();
-		
-	mkLog('Update del formulario realizado con éxito.');
-	return false;
-}
-
 
 function Cleaner(){
 	

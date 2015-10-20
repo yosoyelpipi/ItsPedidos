@@ -125,19 +125,41 @@
 					$("#instala").show();
 					
 					if(Response.Cantidad != 0){
+
+					var db = openDatabase("ANDROID", "1.0", "Pedidos Offline", 200000);
+					db.transaction(crearEmpresa, errorCB, successCB);
+function crearEmpresa(tx){													
 						for(x=0; x<Response.Data.length; x++) {
 								console.log('Esto es el ID: '+ Response.Data[x]["ID"]);
 								console.log('Esto es el DESC: '+ Response.Data[x]["DESCRIPCION"]);
 								console.log('Esto es el TE: '+ Response.Data[x]["TE"]);
 								console.log('Esto es el NUM_DOC: '+ Response.Data[x]["NUM_DOC"]);
+								tx.executeSql("INSERT INTO erp_empresas (id, descripcion, te, num_doc) VALUES ('"+Response.Data[x]["ID"]+"', '"+Response.Data[x]["DESCRIPCION"]+"', '"+Response.Data[x]["TE"]+"', '"+Response.Data[x]["NUM_DOC"]+"') ");
 							}
+						}
+						
 						$("#instala").html('<span class="label label-default">¡Genial! se han sincronizado ' + Response.Data.length + ' registros.</span><br>');
 						window.localStorage.setItem("fua_cli", Response.ItsGetDate);
 						$("#instala").append('<span class="label label-success">Fecha de última actualización: ' + Response.ItsGetDate + '</span>');
-						console.log('Fecha de última actualización:' + Response.ItsGetDate);
+						console.log('Fecha de última actualización:' + Response.ItsGetDate);						
 						//$("#instala").fadeOut(10000);						
 					}else{
-						$("#instala").html('<span class="label label-info">Tenés el maestro de empresas actualizado</span><br>');
+			if( confirm("No hay empresas nuevas para centralizar desde la última vez que se sincronizó, la fecha y hora es " + fua_cli + ". De todas maneras ¿Desea forzar la centralización? se perderán todas las empresas guardadas.") )
+            {
+			//Borro los datos de la tabla.
+			var db = openDatabase("ANDROID", "1.0", "Pedidos Offline", 200000);
+			db.transaction(function(tx) {
+			tx.executeSql("delete from erp_empresas");
+			}, errorCB, successCB);
+			
+			//Actualizo la fecha de última actualización.
+			  window.localStorage.setItem("fua_cli", '');
+			//Todo fue maravilloso  
+              alert('¡Excelente! ahora volvé a centralizar las empresas.');
+				//location.reload();			  
+            }
+					
+						//$("#instala").html('<span class="label label-info">Tenés el maestro de empresas actualizado</span><br>');
 						$("#instala").fadeOut(9000);
 					}
 			}
@@ -150,24 +172,55 @@
 			}else{
 					$("#estadodown").hide();
 					$("#instala").show();
-					
-					if(Response.Cantidad != 0){
+                    if(Response.Cantidad != 0){
+					var db = openDatabase("ANDROID", "1.0", "Pedidos Offline", 200000);
+					db.transaction(crearPrecios, errorCB, successCB);
+function crearPrecios(tx){
 						for(x=0; x<Response.Data.length; x++) {
 								console.log('Esto es el ID: '+ Response.Data[x]["ID"]);
+								console.log('Esto es el ARTICULOS: '+ Response.Data[x]["FK_ERP_ARTICULOS"]);
 								console.log('Esto es la DESCRIPCIÓN: '+ Response.Data[x]["DES_ART"]);
 								console.log('Esto es el PRECIO: '+ Response.Data[x]["PRECIO"]);
+tx.executeSql("INSERT INTO erp_pre_ven (id, fk_erp_articulos, des_art, precio) VALUES ('"+Response.Data[x]["ID"]+"', '"+Response.Data[x]["FK_ERP_ARTICULOS"]+"', '"+Response.Data[x]["DES_ART"]+"', "+Response.Data[x]["PRECIO"]+") ");						
 							}
+}
 						$("#instala").html('<span class="label label-default">¡Genial! se han sincronizado ' + Response.Data.length + ' registros.</span><br>');
 						window.localStorage.setItem("fua_precios", Response.ItsGetDate);
 						$("#instala").append('<span class="label label-success">Fecha de última actualización: ' + Response.ItsGetDate + '</span>');
 						console.log('Fecha de última actualización:' + Response.ItsGetDate);
 						//$("#instala").fadeOut(10000);						
 					}else{
-						$("#instala").html('<span class="label label-info">Tenés la lista de precios actualizada.</span><br>');
+					
+if( confirm("No hay precios nuevos o actualizados para centralizar desde la última vez que se sincronizó, la fecha y hora es " + fua_cli + ". De todas maneras ¿Desea forzar la centralización? se perderán todos los precios guardadas.") )
+            {
+			//Borro los datos de la tabla.
+			var db = openDatabase("ANDROID", "1.0", "Pedidos Offline", 200000);
+			db.transaction(function(tx) {
+			tx.executeSql("delete from erp_pre_ven");
+			}, errorCB, successCB);
+			
+			//Actualizo la fecha de última actualización.
+			  window.localStorage.setItem("fua_precios", '');
+			//Todo fue maravilloso  
+              alert('¡Excelente! ahora volvé a centralizar los precios.');
+				//location.reload();			  
+            }					
+						//$("#instala").html('<span class="label label-info">Tenés la lista de precios actualizada.</span><br>');
 						$("#instala").fadeOut(9000);
 					}
 			}
 		}		
+
+function errorCB(err){
+	console.log("Error procesando SQL:" + err.code);
+	//navigator.notification.alert("Error procesando SQL:" + err.code);
+	alert("Error procesando SQL:" + err.code + '-' + err.message);
+}
+
+function successCB(){
+	mkLog("Dato insertado");
+	//navigator.notification.alert("Error procesando SQL:" + err.code);
+}
 		
 	</script>	
 	

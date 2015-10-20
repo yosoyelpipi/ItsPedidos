@@ -33,6 +33,7 @@ $client = new nusoap_client($ws,true);
 					echo json_encode(array("ItsLoginResult"=>$error, "motivo"=>$err));
 				}else{
 					//echo json_encode(array("ItsLoginResult"=>$error, "session"=>$session));
+				//$empresas = $client->call('ItsGetData', array('UserSession' => $session, 'ItsClassName' => 'ERP_EMPRESAS', 'RecordCount' => '-1', 'SQLFilter'=>"FEC_ULT_ACT > '".$fua."' and _ERP_HAB_MOBILE = 1 " , 'SQLSort'=> '') );
 				$empresas = $client->call('ItsGetData', array('UserSession' => $session, 'ItsClassName' => 'ERP_EMPRESAS', 'RecordCount' => '-1', 'SQLFilter'=>"FEC_ULT_ACT > '".$fua."' and _ERP_HAB_MOBILE = 1 " , 'SQLSort'=> '') );
 				$ItsGetDataResult = $empresas["ItsGetDataResult"];
 				$DataEmpresas = $empresas["XMLData"];
@@ -47,7 +48,7 @@ $client = new nusoap_client($ws,true);
 								//Ahora comienzo a recorrer el XML para mostrar los atributos por pantalla.
 								$langs = $array['ROWDATA']['ROW'];
 								$count = sizeof($langs);
-								if($count==''){$counts=0;} 
+								if($count==''){$counts=0;}
 								for ($i=0; $i<sizeof($langs); $i++) {
 if($count == 1){
 $datos = array('ID'=>$langs['@attributes']['ID'],'DESCRIPCION'=>$langs['@attributes']['DESCRIPCION'],'TE'=>$langs['@attributes']['TE'],'NUM_DOC'=>$langs['@attributes']['NUM_DOC']);
