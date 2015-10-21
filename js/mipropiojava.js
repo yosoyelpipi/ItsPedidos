@@ -59,7 +59,7 @@ function ShowMenu(){
 
 function ShowDownload(){
 	
-	/*var networkState = navigator.connection.type;
+	var networkState = navigator.connection.type;
 	var states = {};
 	states[Connection.UNKNOWN]  = 'No podemos determinar tu tipo de conexión a una red de datos.';
 	states[Connection.ETHERNET] = 'Estás conectado a la red mediante Ethernet connection, estamos listo para sincronizar los datos.';
@@ -68,31 +68,49 @@ function ShowDownload(){
 	states[Connection.CELL_3G]  = 'Estás conectado a la red mediante Cell 3G connection, estamos listo para sincronizar los datos.';
 	states[Connection.CELL_4G]  = 'Estás conectado a la red mediante Cell 4G connection, estamos listo para sincronizar los datos.';
 	states[Connection.CELL]     = 'Estás conectado a la red mediante Cell generic connection, podrías experimentar lentitud en la sincronización.';
-	states[Connection.NONE]     = '¡Atención! tu dispositivo no tiene conexion a datos, no podrás sincronizar, sin embargo podrás seguir trabajando de manera offline.';*/
+	states[Connection.NONE]     = '¡Atención! tu dispositivo no tiene conexion a datos, no podrás sincronizar, sin embargo podrás seguir trabajando de manera offline.';
 	
-		//if(navigator.network.connection.type == Connection.WIFI){
-			// No tenemos conexión
+		if(navigator.network.connection.type == Connection.WIFI){
+			//No tenemos conexión
 			//alert(states[networkState]);
-			//var existe = window.localStorage.getItem("ws");
-			//if(!existe){
-				//	alert('Si bien detectamos que tu dispositivo tiene Wi-Fi, parece que aún no definiste los parámetros de conexión. Andá a la sección configuración y volvé por aquí.');
-			//}else{
+			var existe = window.localStorage.getItem("ws");
+			if(!existe){
+					alert('Si bien detectamos que tu dispositivo tiene Wi-Fi, parece que aún no definiste los parámetros de conexión. Andá a la sección configuración y volvé por aquí.');
+			}else{
 					$("#menuPrincial").hide();
 					$("#bajada").html('Panel de sincronización.').show();
 					$("#download").show();
-			//}
-		//}else{
+			}
+		}else{
 			// Si tenemos conexión
 			//alert(states[networkState]);
-			//alert('Detectamos que no estás conectado a ninguna red Wi-Fi, conectate a alguna red disponible y volvé por acá');
-		//}	
+			alert('Detectamos que no estás conectado a ninguna red Wi-Fi, conectate a alguna red disponible y volvé por acá');
+		}	
 	}
+
+function ShowOrder(){
+		var existe = window.localStorage.getItem("ws");
+		if(!existe){
+			console.log('No está definido el WS entonces no puedo mostrar la carga de pedido.');
+			alert('No tenés definido los parámetros de conexión. Definí uno y volvé por acá.');
+		}else{
+			$("#menuPrincial").hide();
+			$("#bajada").html('Pedidos de ventas.').show();
+			$("#order").show();
+			
+		}
+}	
 
 function HideDownload(){
 	$("#download").hide();
 	$("#menuPrincial").show();
 	}	
 
+function HideOrder(){
+	$("#order").hide();
+	$("#menuPrincial").show();
+	}	
+	
 function Vermenu(){
 		var wsS = window.localStorage.getItem("ws");
 		var bdS = window.localStorage.getItem("bd");
@@ -255,6 +273,50 @@ function cargaDatosSuccess(tx, results){
 						'</tr>');
 	}
 }
+
+
+function cargaEmpresas(){
+	db.transaction(cargaCliente, errorDB);
+}
+
+function cargaCliente(tx){
+	console.log("Cargando registros de la base de datos.");
+	tx.executeSql('select * from erp_empresas', [], cargaClienteSuccess, errorDB);
+}
+
+function cargaClienteSuccess(tx, results){
+	console.log("Recibidos de la base de datos" + results.rows.length + " registros");
+	if(results.rows.length == 0){
+		console.log("La tabla está vacía.");
+		alert("La tabla está vacía.");
+	}else{		
+			var Datos = [];
+			var selector = $('#aca');
+			for(var i=0; i<results.rows.length; i++){
+				var empresas = results.rows.item(i);
+				console.log(Datos[i] = empresas.descripcion);
+				//console.log('Esto es la descripcion: '+empresas.descripcion);
+				//console.log('Esto es el areeglo: ' + Datos[i]);
+				
+				selector.append('<tr>' +
+									'<th scope="row">' + empresas.id + '</th>' +
+									'<td>' + empresas.descripcion + '</td>' +
+								'</tr>');
+				
+			}
+			
+			//alert(Datos);
+			
+$(function() {
+    $( "#tags" ).autocomplete({
+      source: Datos
+    });
+  });			
+	}	
+}
+
+
+
 
 /*
 	*Guardando datos en local storage
