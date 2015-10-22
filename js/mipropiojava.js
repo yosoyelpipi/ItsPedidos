@@ -43,6 +43,9 @@ function onDeviceReady(){
 	//Habilita la función del botón menú.
 	document.addEventListener("menubutton", onMenuKeyDown, false);
 	
+	//Cargo las empresas guardadas.
+	cargaEmpresas();
+	
 }
 function ShowParam(){
 	$("#menuPrincial").hide();
@@ -56,6 +59,12 @@ function ShowMenu(){
 	$("#configurado").hide();
 	$("#menuPrincial").show();
 }
+/*
+function ShowDownload(){
+					$("#menuPrincial").hide();
+					$("#bajada").html('Panel de sincronización.').show();
+					$("#download").show();	
+	}*/
 
 function ShowDownload(){
 	
@@ -294,14 +303,16 @@ function cargaClienteSuccess(tx, results){
 			var selector = $('#aca');
 			for(var i=0; i<results.rows.length; i++){
 				var empresas = results.rows.item(i);
-				console.log(Datos[i] = empresas.descripcion);
+				Datos[i] = empresas.descripcion;
 				//console.log('Esto es la descripcion: '+empresas.descripcion);
 				//console.log('Esto es el areeglo: ' + Datos[i]);
 				
+				/*
 				selector.append('<tr>' +
 									'<th scope="row">' + empresas.id + '</th>' +
 									'<td>' + empresas.descripcion + '</td>' +
 								'</tr>');
+				*/
 				
 			}
 			

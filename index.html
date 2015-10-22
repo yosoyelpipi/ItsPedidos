@@ -178,10 +178,10 @@ function crearEmpresa(tx){
 					db.transaction(crearPrecios, errorCB, successCB);
 function crearPrecios(tx){
 						for(x=0; x<Response.Data.length; x++) {
-								console.log('Esto es el ID: '+ Response.Data[x]["ID"]);
-								console.log('Esto es el ARTICULOS: '+ Response.Data[x]["FK_ERP_ARTICULOS"]);
-								console.log('Esto es la DESCRIPCIÓN: '+ Response.Data[x]["DES_ART"]);
-								console.log('Esto es el PRECIO: '+ Response.Data[x]["PRECIO"]);
+								//console.log('Esto es el ID: '+ Response.Data[x]["ID"]);
+								//console.log('Esto es el ARTICULOS: '+ Response.Data[x]["FK_ERP_ARTICULOS"]);
+								//console.log('Esto es la DESCRIPCIÓN: '+ Response.Data[x]["DES_ART"]);
+								//console.log('Esto es el PRECIO: '+ Response.Data[x]["PRECIO"]);
 tx.executeSql("INSERT INTO erp_pre_ven (id, fk_erp_articulos, des_art, precio) VALUES ('"+Response.Data[x]["ID"]+"', '"+Response.Data[x]["FK_ERP_ARTICULOS"]+"', '"+Response.Data[x]["DES_ART"]+"', "+Response.Data[x]["PRECIO"]+") ");						
 							}
 }
@@ -221,6 +221,18 @@ function errorCB(err){
 function successCB(){
 	mkLog("Dato insertado");
 	//navigator.notification.alert("Error procesando SQL:" + err.code);
+}
+
+function dameRenglon(){
+	$("#detalle").append('<div class="input-group">' +
+							'<div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>' +
+							'<input type="text" class="form-control" id="exampleInputAmount" placeholder="Artículos">' +
+							'<div class="input-group-addon"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></div>' +
+						 '</div>'
+	);
+	//<div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
+	//<input type="text" class="form-control" id="exampleInputAmount" placeholder="Artículos">
+	//<div class="input-group-addon"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></div>
 }
 
 
@@ -373,13 +385,36 @@ function successCB(){
 	
 	<div id="order">
 		<div class="ui-widget">
-		  <label for="tags">Empresa: </label>
-		  <input id="tags" onkeyup="cargaEmpresas()">
+			<form>
+			<div class="input-group">
+				<div class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></div>
+				<input type="text" id="tags" class="form-control" id="exampleInputAmount" placeholder="Escribí la razón social...">
+				<div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
+			</div>
+		<hr>			
+			  <div class="form-group">
+				<label class="sr-only" for="exampleInputAmount">Articulos</label>
+				<div class="input-group">
+				  <div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
+				  <input type="text" class="form-control" id="exampleInputAmount" placeholder="Artículos">
+				  <div class="input-group-addon"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></div>
+				</div>
+				<div id="detalle">
+				</div>
+			  </div>
+			  <button class="btn btn-default" onclick="dameRenglon()" type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+			  <br><hr>
+			  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span> Guardar</button>
+			</form>			
+		  <!--
+			<label for="tags">Empresa: </label>
+			<input id="tags" onkeyup="cargaEmpresas()">
+		  -->
 		</div>
 		<hr>
 		<div id="aca"></div>
 		<hr>
-		<button type="button" class="btn btn-primary btn-lg btn-block" onClick="cargaEmpresas()"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span> Volver</button>
+		<button type="button" class="btn btn-primary btn-lg btn-block" onClick="HideOrder()"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span> Volver</button>
 	</div>
 	
 	<div id="send">
