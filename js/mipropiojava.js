@@ -46,6 +46,9 @@ function onDeviceReady(){
 	//Cargo las empresas guardadas.
 	cargaEmpresas();
 	
+	//Cargo la lista de precios guardadas.
+	cargaArticulos();
+	
 }
 function ShowParam(){
 	$("#menuPrincial").hide();
@@ -59,13 +62,13 @@ function ShowMenu(){
 	$("#configurado").hide();
 	$("#menuPrincial").show();
 }
-/*
+
 function ShowDownload(){
 					$("#menuPrincial").hide();
 					$("#bajada").html('Panel de sincronización.').show();
 					$("#download").show();	
-	}*/
-
+	}
+/*
 function ShowDownload(){
 	
 	var networkState = navigator.connection.type;
@@ -96,7 +99,7 @@ function ShowDownload(){
 			alert('Detectamos que no estás conectado a ninguna red Wi-Fi, conectate a alguna red disponible y volvé por acá');
 		}	
 	}
-
+*/
 function ShowOrder(){
 		var existe = window.localStorage.getItem("ws");
 		if(!existe){
@@ -328,6 +331,35 @@ $(function() {
 
 
 
+function cargaArticulos(){
+	db.transaction(cargaArt, errorDB);
+}
+
+function cargaArt(tx){
+	console.log("Cargando pedidos de la base de datos.");
+	tx.executeSql('select * from erp_pre_ven', [], cargaArtSuccess, errorDB);
+}
+
+function cargaArtSuccess(tx, results){
+	console.log("Recibidos de la base de datos" + results.rows.length + " registros");
+	if(results.rows.length == 0){
+		console.log("La tabla precios de ventas está vacía.");
+		alert("La tabla precios de ventas está vacía.");
+	}else{		
+			var Art = [];
+			var selector = $('#aca');
+			for(var i=0; i<results.rows.length; i++){
+				var art = results.rows.item(i);
+				Art[i] = art.des_art;	
+			}
+			
+			$(function() {
+				$( "#erpart" ).autocomplete({
+				  source: Art
+				});
+			  });			
+	}	
+}
 
 /*
 	*Guardando datos en local storage
