@@ -276,6 +276,17 @@ function successCB(){
 	#ImpTotCot{
 		display: none;
 	}
+	tr{
+		font-size:10px;
+		width: 90%;
+	}
+	th{
+		font-size:10px;
+		width: 90%;
+	}
+	#footer{
+		display:none;
+	}
 </style>	
   </head>
 
@@ -389,20 +400,78 @@ function successCB(){
 			<div class="input-group">
 				<div class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></div>
 				<input type="text" id="tags" class="form-control" id="tags" placeholder="Escribí la razón social...">
-				<div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
+				<div class="input-group-addon" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#Empresas"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
 			</div>
 		<hr>			
 			  <div class="form-group">
 				<label class="sr-only" for="erpart">Articulos</label>
 				<div class="input-group">
 				  <div class="input-group-addon"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></div>
+				  <!--<select class="form-control" id="opciones" name="opciones">
+				  </select>-->
 				  <input type="text" id="erpart" class="form-control" placeholder="Artículos">
-				  <div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
+				  <div class="input-group-addon" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#Articulos"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
 				</div>
 			  </div>
+
+<!-- Empresas -->
+<div class="modal fade" id="Empresas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Empresas</h4>
+      </div>
+      <div class="modal-body" id="erp_empresas">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Artículos -->
+<div class="modal fade" id="Articulos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Artículos</h4>
+      </div>
+      <div class="modal-body">
+		<div class="col-md-8">     
+		  <table width="90%" id="table-art" class="table table-condensed">
+		  <thead>
+			<tr>
+			  <th>#</th>
+			  <th>Descripcion</th>
+			  <th>Precio</th>
+			</tr>
+		  </thead>
+		  <tbody width="90%" id="erp_articulos">
+		  </tbody>
+		  </table>
+		  <hr>
+		  <button class="btn btn-default" id="sendCard" onclick="return btnCards_onclick()" type="button"><span class="glyphicon glyphicon-retweet" aria-hidden="true"></span> Sincronizar</button>
+		  <div id="sendCardResult"></div>
+		  <hr>    
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+      </div>
+    </div>
+  </div>
+</div>			  
+			  
 			  <!--<button class="btn btn-default" onclick="dameRenglon()" type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>-->
 			  <button class="btn btn-default" onclick="addClient()" type="button"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></button>
 			  <button class="btn btn-default" onclick="addCart()" type="button"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></button>
+			  
 			  <hr>
 				<div id="cabecera">
 					<ol class="breadcrumb">
@@ -411,15 +480,13 @@ function successCB(){
 					</ol>
 				</div>
 				<div id="subcabecera"></div>
-				<div id="detalle">
-					<ul class="list-group" id="erpdetcom">			  
-					</ul>				
-				</div>
+				<ul class="list-group" id="detalle">
+				</ul>				
 			</form>
 		</div>
 		<hr>
-		<div id="ImpTotCot">
-			<p class="text-right"><button class="btn btn-default" type="submit">Total $12000</button></p>
+		<div id="ImpTotCot"></div>
+		<div id="footer">
 			<button class="btn btn-success" onclick="" type="button"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
 			<button class="btn btn-danger" onclick="resetCar();" type="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
 		</div>
@@ -474,14 +541,19 @@ function successCB(){
 		</script>
 <script language="javascript">
 function addCart(){
-			 if ($('#erpart').val() == '') {
-                alert('Por favor seleccione una artículo!');
+			 if ($('#opciones').val() == '') {
+                alert('Por favor seleccione un artículo!');
                 return;
             }
 			
+			if ($('#tags').val() == '') {
+				alert('Por favor seleccione una empresa!');
+				return;
+			}
+			
 			$("#detalle").show();
 			
-			var article = $('#erpart').val();
+			var article = $('#opciones').val();
 			$("#erpdetcom").append('<li class="list-group-item">' +
 										'<span class="badge">14</span> ' + 
 										article +
@@ -494,7 +566,7 @@ function addClient(){
 		alert('Por favor seleccione una empresa!');
 		return;
 	}
-	$("#cabecera").show();			
+		$("#cabecera").show();			
 		var empresa = $('#tags').val();
 		window.localStorage.setItem("empresa", empresa);
 		var fk_erp_empresas = window.localStorage.getItem("empresa");

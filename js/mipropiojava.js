@@ -346,21 +346,64 @@ function cargaArtSuccess(tx, results){
 		console.log("La tabla precios de ventas está vacía.");
 		alert("La tabla precios de ventas está vacía.");
 	}else{		
+			var id = [];
 			var Art = [];
+			var Desc = [];
+			var precios = [];
+			var registro = [];
+			
 			var selector = $('#aca');
+		    var a;
+			
 			for(var i=0; i<results.rows.length; i++){
-				var art = results.rows.item(i);
-				Art[i] = art.des_art;	
+			var art = results.rows.item(i);
+				//id[i] = art.id;
+				//Art[i] = art.fk_erp_articulos;
+				//Desc[i] = art.des_art;
+				//precios[i] = art.precio;
+				//$("#opciones").append('<option value="'+ art.fk_erp_articulos +'">' + art.des_art + ' | $' + art.precio +'</option>');
+				
+				$("#erp_articulos").append('<tr>' +
+											'<th scope="row"><button class="btn btn-default" onclick="clickMe(\' '+ art.fk_erp_articulos + '\', '+ art.precio +', \' '+ art.des_art + '\' )"; type="button"> ' + 
+											'<span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button> '+ art.fk_erp_articulos + '</th>' +
+											'<td>'+ art.des_art +'</td>' +
+											'<td>'+ art.precio +'</td>' +
+											'</tr>');
 			}
 			
-			$(function() {
-				$( "#erpart" ).autocomplete({
-				  source: Art
-				});
-			  });			
+			$(function(){
+				//$("#erpart").autocomplete({source: desc});
+				// $("#search_term").autocomplete("option", "source", "search_comments.php");
+				//$("#erpart").autocomplete( "option", source: Desc );
+			  });
 	}	
 }
 
+function clickMe(a, p, d){
+var a;
+var p;
+var d;
+
+var tot;
+
+tot = p++;
+
+
+//var descr;
+	//alert('Esto es el art:' + arti);
+	//alert('Esto es la desc:' + desc);
+	$("#cabecera").show();
+	$("#subcabecera").show();
+	$("#detalle").show();
+	$("#ImpTotCot").show();
+	$("#footer").show();
+	
+	//$("#detalle").append('<li class="list-group-item">'+ a +'</li>');
+	$("#detalle").append('<li class="list-group-item"> ' +
+						 '<span class="badge">$'+ p +'</span> ' +
+						 '	'+ a +' | ' + d  + '</li>');
+	$("#ImpTotCot").html('<p class="text-right"><button class="btn btn-default" type="button">Total $'+ tot +'</button></p>');
+}
 /*
 	*Guardando datos en local storage
 */
