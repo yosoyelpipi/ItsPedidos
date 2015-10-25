@@ -44,10 +44,10 @@ function onDeviceReady(){
 	document.addEventListener("menubutton", onMenuKeyDown, false);
 	
 	//Cargo las empresas guardadas.
-	cargaEmpresas();
+	//cargaEmpresas();
 	
 	//Cargo la lista de precios guardadas.
-	cargaArticulos();
+	//cargaArticulos();
 	
 }
 function ShowParam(){
@@ -386,32 +386,6 @@ function cargaArtSuccess(tx, results){
 			  });
 	}	
 }
-
-function clickMe(a, p, d){
-var a;
-var p;
-var d;
-
-var tot;
-
-tot = p++;
-
-
-//var descr;
-	//alert('Esto es el art:' + arti);
-	//alert('Esto es la desc:' + desc);
-	$("#cabecera").show();
-	$("#subcabecera").show();
-	$("#detalle").show();
-	$("#ImpTotCot").show();
-	$("#footer").show();
-	
-	//$("#detalle").append('<li class="list-group-item">'+ a +'</li>');
-	$("#detalle").append('<li class="list-group-item"> ' +
-						 '<span class="badge">$'+ p +'</span> ' +
-						 '	'+ a +' | ' + d  + '</li>');
-	$("#ImpTotCot").html('<p class="text-right"><button class="btn btn-default" type="button">Total $'+ tot +'</button></p>');
-}
 /*
 	*Guardando datos en local storage
 */
@@ -472,17 +446,23 @@ function searchArticulos(){
 }
 function searchArt(tx){
 	var search = $("#searchart").val();
-	//alert('Esto voy a buscar' + search);
+	
+	if(!search){
+		alert('Tenés que ingresar un artículo para iniciar la búsqueda');
+		return;
+	}
+	
 	console.log("Cargando pedidos::: "+search+" :::de la base de datos.");
 	tx.executeSql('select * from erp_pre_ven where fk_erp_articulos like(\'%'+ search +'%\') or des_art like(\'%'+ search +'%\') ', [], searchArtSuccess, errorDB);
 }
 function searchArtSuccess(tx, results){
-	//console.log("Recibidos de la base de datos" + results.rows.length + " registros");
+	
+	
 	if(results.rows.length == 0){
-		console.log("No hay resultados para ::: "+search+" ::: la busqueda seleccionada.");
-		alert("No hay resultados para "+search+" la busqueda seleccionada.");
-	}else{	
-	$("#erparticulos").hide();
+		var searchFail = $("#searchart").val();
+		console.log("No hay resultados para la busqueda (" + searchFail + ")seleccionada.");
+		alert("No hay resultados para la busqueda (" + searchFail + ") seleccionada.");
+	}else{
 	console.log('Oculto todos los resultos sin limpiar datos. Para no volver a cargarlos.');
 	
 	$("#erpdetarticulossearch").html('');
@@ -491,16 +471,15 @@ function searchArtSuccess(tx, results){
 	
 		for(var z=0; z<results.rows.length; z++){
 				var artresult = results.rows.item(z);
+				//Muestro la sección del buscador.
+				$("#google").show();
+				//Limpio la sección de resultados del buscador.
+				$("#erpdetarticulossearch").show();
+				//Grabo en la consola el estado de los resultados.
+				console.log('Encontre esto: ' + artresult.fk_erp_articulos);
 				
-				$("#erparticulos").hide();
-				console.log('Oculte sin problemas todos los articulos===>' + artresult.id);
-				
-				console.log('Encontre esto' + artresult.fk_erp_articulos);
-				/*$("#erpdetarticulossearch").append('<a href="#" class="list-group-item">' +
-											 '<span class="glyphicon glyphicon-tag" aria-hidden="true"></span> ' +
-											 ' '+ art.fk_erp_articulos +' - '+ art.des_art +' <span class="badge">$ '+ art.precio +'</span>' +
-											 '</a>');*/
-				$("#erpdetarticulossearch").append('<button type="button" class="list-group-item">'+ artresult.fk_erp_articulos +' - '+ artresult.des_art +' <span class="badge">$ '+ artresult.precio +'</span></button>');
+				//Imprimo los resultados encontrados.
+				$("#erpdetarticulossearch").append('<button type="button" onclick="clickMeArt(\' '+ artresult.fk_erp_articulos + ' \', \' '+ artresult.des_art +' \', \' '+ artresult.precio + '\' )";  class="list-group-item" >'+ artresult.fk_erp_articulos +' - '+ artresult.des_art +' <span class="badge">$ '+ artresult.precio +'</span></button>');
 			}
 	}	
 }
@@ -511,9 +490,97 @@ function CleanerSearch(){
 	$("#google").hide();
 	//Limpio los resultados.
 	$("#erpdetarticulossearch").html('');
-	//Muestro la sección completa.
-	$("#erparticulos").show();
-	//Muestro en pantalla todos los resultado.
-	$("#erpdetarticulos").show();
 }
+
+
+
+/*
+BUSCAR EMPRESAS
+*/
+
+function searchEmpresas(){
+	db.transaction(searchEmp, errorDB);
+}
+function searchEmp(tx){
+	var searchEmpresa = $("#searchclient").val();
+	
+	if(!searchEmpresa){
+		alert('Tenés que ingresar un valor para iniciar la búsqueda de empresas');
+		return;
+	}
+	
+	console.log("Cargando clientes ::: "+searchEmpresa+" :::de la base de datos.");
+	tx.executeSql('select * from erp_empresas where id like(\'%'+ searchEmpresa +'%\') or descripcion like(\'%'+ searchEmpresa +'%\') ', [], searchEmpSuccess, errorDB);
+}
+function searchEmpSuccess(tx, results){
+	if(results.rows.length == 0){
+		var searchFail = $("#searchclient").val();
+		console.log("No hay resultados para la busqueda (" + searchFail + ")seleccionada.");
+		alert("No hay resultados para la busqueda (" + searchFail + ") seleccionada.");
+	}else{	
+	$("#erparticulos").hide();
+	console.log('Oculto todos los resultos sin limpiar datos. Para no volver a cargarlos.');
+	
+	$("#erpempresassearch").html('');
+	$("#erpempresassearch").show();
+	console.log('Limpie los resultados anteriores y vuelvo a mostrar los resultados.');
+	
+		for(var x=0; x<results.rows.length; x++){
+				var empresult = results.rows.item(x);
+				//Muestro la sección del buscador.
+				$("#googleEmp").show();
+				//Limpio la sección de resultados del buscador.
+				$("#erpempresassearch").show();
+				//Grabo en la consola el estado de los resultados.
+				console.log('Encontre esto: ' + empresult.descripcion);
+				
+				//Imprimo los resultados encontrados.
+				$("#erpempresassearch").append('<button type="button" onclick="clickMeEmp(\' '+ empresult.id + ' \', \' '+ empresult.descripcion +' \', \' '+ empresult.te + '\', \' '+ empresult.num_doc + ' \');" class="list-group-item"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> '+ empresult.id +' - '+ empresult.descripcion +' ['+ empresult.num_doc +'] | ['+ empresult.te +']</button>');
+			}
+	}	
+}
+
+//Función que limpia el buscador de empresas
+function CleanerSearchEmp(){
+	//Oculto la sección.
+	$("#googleEmp").hide();
+	//Limpio los resultados.
+	$("#erpempresassearch").html('');
+}
+
+function clickMeEmp(idd, description, tel, numdoc){
+	var idd;
+	var description;
+	var tel;
+	var numdoc;
+	//Falta agregar los campos y alertar al usuario.
+	$("#em").html('Empresa: ' + idd);
+	$("#rz").html('Razón social: ' + description);
+	$("#doc").html('N° doc: ' + numdoc);
+	$("#te").html('Te: ' + tel);
+	
+	//Le aviso al usuario que seleccionó la empresa con éxito.
+	alert('La empresa ' + description + ' se agregó correctamente.');
+	$("#menudisabled").hide();
+	$("#menuenabled").show();
+	$("#Artdisabled").hide();
+	$("#Artenabled").show();	
+}
+
+function clickMeArt(erp_articulos, descrip, costo){
+	var erp_articulos;
+	var descrip;
+	var costo;
+	
+	$("#det_com").append('<tr>' +
+							'<th scope="row">'+ erp_articulos +'</th>' +
+							'<td>'+ descrip +'</td>' +
+							'<td>$ '+ costo +'</td>' +
+						 '</tr>');
+	
+	//Le aviso al usuario que seleccionó el artículo con éxito.
+	alert('El artículo ' + descrip + ' se agregó correctamente.');
+}
+
+
 	
