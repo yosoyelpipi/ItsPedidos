@@ -4,9 +4,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="img/favicon.ico">
 
     <title>LocalStora</title>
 
@@ -14,18 +11,25 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="css/jquery-ui.css">
 
+	
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>	
+	
+	
     <!-- Custom styles for this template -->
     <link href="css/starter-template.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="js/ie-emulation-modes-warning.js"></script>
-	
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="css/bootstrap.min.css">
 
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
 	
 	<!--Font -->
 	<link href='https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz' rel='stylesheet' type='text/css'>	
@@ -493,9 +497,49 @@ function successCB(){
 		<hr>
 		<button type="button" class="btn btn-primary btn-lg btn-block" onClick="HideOrder()"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span> Volver</button>
 	</div>
+<br>
+<hr>
+
+
+<!--BUSCADOR-->
+<!--<div class="form-group">
+	<label class="sr-only" for="erpart">Articulos</label>
+	<div class="input-group">
+	  <div class="input-group-addon"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></div>
+	  <input type="text" id="searchart" class="form-control" placeholder="Búsqueda...">
+	  <div class="input-group-addon" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#Articulos"><button class="btn btn-danger" onclick="searchArticulos();" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> BUSCAR</button></div>
+	</div>
+</div>-->
+<hr>
+
+<form class="form-inline">
+  <div class="form-group">
+    <label for="inputPassword2" class="sr-only">Artículo</label>
+    <input type="text" class="form-control" id="searchart" placeholder="Buscar por código o descripción">
+  </div>
+  <button type="button" onclick="searchArticulos();" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Aplicar</button>
+  <button type="button" onclick="CleanerSearch();" class="btn btn-default"><span class="glyphicon glyphicon-erase" aria-hidden="true"></span> Limpiar</button>
+</form>
+
+
+<!--FIN BUSCADOR-->
+	<div id="google">
+		<div class="list-group" id="erpdetarticulossearch">
+		</div>
+	</div>
+
+
+
+	<div id="erparticulos">
+		<div class="list-group" id="erpdetarticulos">
+
+		</div>		
+	</div>
 	
-	<div id="send">
-				
+	<div id="erpprecios">			
+	</div>	
+	
+	<div id="send">			
 	</div>
 	
     </div><!-- /.container -->

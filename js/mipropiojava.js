@@ -369,6 +369,11 @@ function cargaArtSuccess(tx, results){
 											'<td>'+ art.des_art +'</td>' +
 											'<td>'+ art.precio +'</td>' +
 											'</tr>');
+											
+				$("#erpdetarticulos").append('<a href="#" class="list-group-item">' +
+											 '<span class="glyphicon glyphicon-tag" aria-hidden="true"></span> ' +
+											 ' '+ art.fk_erp_articulos + ' - '+ art.des_art +' <span class="badge">$ '+ art.precio +'</span>' +
+											 '</a>');							
 			}
 			
 			$(function(){
@@ -452,5 +457,54 @@ function datosConexion(){
 	//					"BD: " + window.localStorage.getItem("bd") + "<br>" +
 	//					"USer: " + window.localStorage.getItem("user") + "<br>" +
 	//					"Pass: " + window.localStorage.getItem("password") + "<br>");
+}
+
+
+/*
+BUSCAR ARTICULOS
+*/
+
+function searchArticulos(){
+	db.transaction(searchArt, errorDB);
+}
+function searchArt(tx){
+	var search = $("#searchart").val();
+	//alert('Esto voy a buscar' + search);
+	console.log("Cargando pedidos::: "+search+" :::de la base de datos.");
+	tx.executeSql('select * from erp_pre_ven where fk_erp_articulos like(\'%'+ search +'%\') or des_art like(\'%'+ search +'%\') ', [], searchArtSuccess, errorDB);
+}
+function searchArtSuccess(tx, results){
+	//console.log("Recibidos de la base de datos" + results.rows.length + " registros");
+	if(results.rows.length == 0){
+		console.log("No hay resultados para ::: "+search+" ::: la busqueda seleccionada.");
+		alert("No hay resultados para "+search+" la busqueda seleccionada.");
+	}else{	
+	$("#erparticulos").hide();
+	console.log('Oculto todos los resultos sin limpiar datos. Para no volver a cargarlos.');
+	
+	$("#erpdetarticulossearch").html('');
+	console.log('Limpie los resultados anteriores y vuelvo a mostrar los resultados.');
+	
+		for(var z=0; z<results.rows.length; z++){
+				var artresult = results.rows.item(z);
+				
+				$("#erparticulos").hide();
+				console.log('Oculte sin problemas todos los articulos===>' + artresult.id);
+				
+				console.log('Encontre esto' + artresult.fk_erp_articulos);
+				/*$("#erpdetarticulossearch").append('<a href="#" class="list-group-item">' +
+											 '<span class="glyphicon glyphicon-tag" aria-hidden="true"></span> ' +
+											 ' '+ art.fk_erp_articulos +' - '+ art.des_art +' <span class="badge">$ '+ art.precio +'</span>' +
+											 '</a>');*/
+				$("#erpdetarticulossearch").append('<button type="button" class="list-group-item">'+ artresult.fk_erp_articulos +' - '+ artresult.des_art +' <span class="badge">$ '+ artresult.precio +'</span></button>');
+			}
+	}	
+}
+
+function CleanerSearch(){
+	$("#google").hide();
+	$("#erpdetarticulossearch").html('');
+	
+	$("#erparticulos").show();
 }
 	
