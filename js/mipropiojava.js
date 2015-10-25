@@ -344,16 +344,19 @@ function cargaArtSuccess(tx, results){
 	console.log("Recibidos de la base de datos" + results.rows.length + " registros");
 	if(results.rows.length == 0){
 		console.log("La tabla precios de ventas está vacía.");
-		alert("La tabla precios de ventas está vacía.");
+		alert("Para poder usar esta app te informamos que la debés tener sincronizada la lista de precios.");
 	}else{		
-			var id = [];
+			/*var id = [];
 			var Art = [];
 			var Desc = [];
 			var precios = [];
 			var registro = [];
 			
 			var selector = $('#aca');
-		    var a;
+		    var a;*/
+			
+			//Oculto los articulos, pero los cargo.
+			$("#erpdetarticulos").hide();
 			
 			for(var i=0; i<results.rows.length; i++){
 			var art = results.rows.item(i);
@@ -363,12 +366,12 @@ function cargaArtSuccess(tx, results){
 				//precios[i] = art.precio;
 				//$("#opciones").append('<option value="'+ art.fk_erp_articulos +'">' + art.des_art + ' | $' + art.precio +'</option>');
 				
-				$("#erp_articulos").append('<tr>' +
+				/*$("#erp_articulos").append('<tr>' +
 											'<th scope="row"><button class="btn btn-default" onclick="clickMe(\' '+ art.fk_erp_articulos + '\', '+ art.precio +', \' '+ art.des_art + '\' )"; type="button"> ' + 
 											'<span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button> '+ art.fk_erp_articulos + '</th>' +
 											'<td>'+ art.des_art +'</td>' +
 											'<td>'+ art.precio +'</td>' +
-											'</tr>');
+											'</tr>');*/
 											
 				$("#erpdetarticulos").append('<a href="#" class="list-group-item">' +
 											 '<span class="glyphicon glyphicon-tag" aria-hidden="true"></span> ' +
@@ -483,6 +486,7 @@ function searchArtSuccess(tx, results){
 	console.log('Oculto todos los resultos sin limpiar datos. Para no volver a cargarlos.');
 	
 	$("#erpdetarticulossearch").html('');
+	$("#erpdetarticulossearch").show();
 	console.log('Limpie los resultados anteriores y vuelvo a mostrar los resultados.');
 	
 		for(var z=0; z<results.rows.length; z++){
@@ -501,10 +505,15 @@ function searchArtSuccess(tx, results){
 	}	
 }
 
+//Función que limpia el buscador de artículo
 function CleanerSearch(){
+	//Oculto la sección.
 	$("#google").hide();
+	//Limpio los resultados.
 	$("#erpdetarticulossearch").html('');
-	
+	//Muestro la sección completa.
 	$("#erparticulos").show();
+	//Muestro en pantalla todos los resultado.
+	$("#erpdetarticulos").show();
 }
 	
