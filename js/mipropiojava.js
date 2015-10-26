@@ -18,7 +18,7 @@ function mkLog(text){
 
 
 function onBodyLoad(){
-	mkLog("Ejecuté el onBodyLoad");
+	mkLog("Ejecuté el onBodyLoad");	
 	document.addEventListener("deviceready", onDeviceReady, false);
 }
 
@@ -27,7 +27,7 @@ function onDeviceReady(){
 	
 	existe_db = window.localStorage.getItem("existe_db");	
 	
-	db = window.openDatabase("ANDROID", "1.0", "Pedidos Offline", 200000);
+	db = window.openDatabase("ERPITRIS", "1.0", "Pedidos Offline", 200000);
 	
 	if(existe_db == null){
 	    mkLog("la BD es null");
@@ -49,6 +49,9 @@ function onDeviceReady(){
 	//Cargo la lista de precios guardadas.
 	//cargaArticulos();
 	
+	//Depuro los pedidos para migrar
+	depuraIniDatos();
+	
 }
 function ShowParam(){
 	$("#menuPrincial").hide();
@@ -68,9 +71,9 @@ function ShowDownload(){
 					$("#bajada").html('Panel de sincronización.').show();
 					$("#download").show();	
 	}
+
 /*
-function ShowDownload(){
-	
+function ShowDownload(){	
 	var networkState = navigator.connection.type;
 	var states = {};
 	states[Connection.UNKNOWN]  = 'No podemos determinar tu tipo de conexión a una red de datos.';
@@ -99,7 +102,47 @@ function ShowDownload(){
 			alert('Detectamos que no estás conectado a ninguna red Wi-Fi, conectate a alguna red disponible y volvé por acá');
 		}	
 	}
+*/	
+
+/*	
+function ShowSync(){	
+	var networkState = navigator.connection.type;
+	var states = {};
+	states[Connection.UNKNOWN]  = 'No podemos determinar tu tipo de conexión a una red de datos.';
+	states[Connection.ETHERNET] = 'Estás conectado a la red mediante Ethernet connection, estamos listo para sincronizar los datos.';
+	states[Connection.WIFI]     = 'Estás conectado a la red mediante WiFi, estamos listo para sincronizar los datos.';
+	states[Connection.CELL_2G]  = 'Estás conectado a la red mediante Cell 2G connection, estamos listo para sincronizar los datos.';
+	states[Connection.CELL_3G]  = 'Estás conectado a la red mediante Cell 3G connection, estamos listo para sincronizar los datos.';
+	states[Connection.CELL_4G]  = 'Estás conectado a la red mediante Cell 4G connection, estamos listo para sincronizar los datos.';
+	states[Connection.CELL]     = 'Estás conectado a la red mediante Cell generic connection, podrías experimentar lentitud en la sincronización.';
+	states[Connection.NONE]     = '¡Atención! tu dispositivo no tiene conexion a datos, no podrás sincronizar, sin embargo podrás seguir trabajando de manera offline.';
+	
+		if(navigator.network.connection.type == Connection.WIFI){
+			//No tenemos conexión
+			//alert(states[networkState]);
+			var existe = window.localStorage.getItem("ws");
+			if(!existe){
+					alert('Si bien detectamos que tu dispositivo tiene Wi-Fi, parece que aún no definiste los parámetros de conexión. Andá a la sección configuración y volvé por aquí.');
+			}else{
+					$("#menuPrincial").hide();
+					$("#bajada").html('Panel de sincronización.').show();
+					$("#sync").show();
+			}
+		}else{
+			// Si tenemos conexión
+			//alert(states[networkState]);
+			alert('Detectamos que no estás conectado a ninguna red Wi-Fi, conectate a alguna red disponible y volvé por acá');
+		}	
+	}	
 */
+
+function ShowSync(){
+					$("#menuPrincial").hide();
+					$("#bajada").html('Panel de sincronización.').show();
+					$("#sync").show();
+					
+			}
+			
 function ShowOrder(){
 		var existe = window.localStorage.getItem("ws");
 		if(!existe){
@@ -111,7 +154,7 @@ function ShowOrder(){
 			$("#order").show();
 			
 		}
-}	
+}
 
 function HideDownload(){
 	$("#download").hide();
@@ -120,6 +163,11 @@ function HideDownload(){
 
 function HideOrder(){
 	$("#order").hide();
+	$("#menuPrincial").show();
+	}
+
+function HideSync(){
+	$("#sync").hide();
 	$("#menuPrincial").show();
 	}	
 	
@@ -220,10 +268,11 @@ function creaNuevaDB(tx){
 		  		   "id VARCHAR(50) PRIMARY KEY, " +
 		    	   "descripcion VARCHAR(100)," +
 				   "te VARCHAR(30)," +
-		           "num_doc VARCHAR(13) )";
-	console.log('Creé la tabla ERP_EMPRESAS');			   
+		           "num_doc VARCHAR(13) )";			   
 	tx.executeSql(empresas);
+	console.log('Creé la tabla ERP_EMPRESAS');
 	
+	//Creo la tabla PRECIOS DE VENTAS.
 	tx.executeSql('DROP TABLE IF EXISTS erp_pre_ven');
 	var precios = "CREATE TABLE IF NOT EXISTS erp_pre_ven ( " +
 		  		   "id VARCHAR(50) PRIMARY KEY, " +
@@ -231,30 +280,34 @@ function creaNuevaDB(tx){
 		    	   "des_art VARCHAR(40)," +				   
 		           "precio NUMERIC(10,4) )";
 	tx.executeSql(precios);
+	console.log('Creé la tabla erp_pre_ven');
+
+	//Creo la tabla PEDIDOS DE VENTAS.
+	tx.executeSql('DROP TABLE IF EXISTS erp_mig_ped');
+	var erp_mig_ped = "CREATE TABLE IF NOT EXISTS erp_mig_ped ( " +
+						"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+						"numero NUMERIC(12), " +
+						"fk_erp_empresas VARCHAR(15)," +
+						"fk_erp_articulos VARCHAR(15), " +
+						"cantidad NUMERIC(12), " +
+						"estado varchar(1), " +				   
+						"precio NUMERIC(10,4) )";
+	tx.executeSql(erp_mig_ped);
+	console.log('Creé la tabla erp_mig_ped');
 	
 	//Marco a la aplicación para que sepa que la base de datos ya está creada.
 	window.localStorage.setItem("existe_db", 1);
-	
-	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (1, 'Argentina', 'AR')" );
-	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (2, 'Brasil', 'BR')" );
-	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (3, 'Bolivia', 'BO')" );
-	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (4, 'Colombia', 'CO')" );
-	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (5, 'Chile', 'CH')" );
-	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (6, 'Ecuador', 'EC')" );
-	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (7, 'Paraguay', 'PY')" );
-	tx.executeSql("INSERT INTO erp_paises (id, descripcion, sigla) VALUES (8, 'Uruguay', 'UY')" );
 }
 
 function crearSuccess(){
-	cargaDatos();	
+	console.log('La base y tablas se crearon con éxito.');
+	//cargaDatos();	
 }
 
 function errorDB(err){
-	mkLog("Error procesando SQL:" + err.code);
-	navigator.notification.alert("Error procesando SQL:" + err.code);
+	mkLog("Error procesando SQL:" + err.message);
+	alert("Error procesando SQL:" + err.message);
 }
-
-
 
 /*
 *Cargar desde la base de datos
@@ -271,8 +324,8 @@ function cargaRegistros(tx){
 function cargaDatosSuccess(tx, results){
 	mkLog("Recibidos de la base de datos" + results.rows.length + " registros");
 	if(results.rows.length == 0){
-		mkLog("La tabla está vacía.");
-		navigator.notification.alert("La tabla está vacía.");
+		mkLog("La tabla países está vacía.");
+		//alert("La tabla países está vacía.");
 	}
 	
 	for(var i=0; i<results.rows.length; i++){
@@ -456,8 +509,6 @@ function searchArt(tx){
 	tx.executeSql('select * from erp_pre_ven where fk_erp_articulos like(\'%'+ search +'%\') or des_art like(\'%'+ search +'%\') ', [], searchArtSuccess, errorDB);
 }
 function searchArtSuccess(tx, results){
-	
-	
 	if(results.rows.length == 0){
 		var searchFail = $("#searchart").val();
 		console.log("No hay resultados para la busqueda (" + searchFail + ")seleccionada.");
@@ -554,10 +605,10 @@ function clickMeEmp(idd, description, tel, numdoc){
 	var tel;
 	var numdoc;
 	//Falta agregar los campos y alertar al usuario.
-	$("#em").html('Empresa: ' + idd);
-	$("#rz").html('Razón social: ' + description);
-	$("#doc").html('N° doc: ' + numdoc);
-	$("#te").html('Te: ' + tel);
+	$("#em").html(idd);
+	$("#rz").html(description);
+	$("#doc").html(numdoc);
+	$("#te").html(tel);
 	
 	//Le aviso al usuario que seleccionó la empresa con éxito.
 	alert('La empresa ' + description + ' se agregó correctamente.');
@@ -573,14 +624,127 @@ function clickMeArt(erp_articulos, descrip, costo){
 	var costo;
 	
 	$("#det_com").append('<tr>' +
-							'<th scope="row">'+ erp_articulos +'</th>' +
-							'<td>'+ descrip +'</td>' +
-							'<td>$ '+ costo +'</td>' +
+							'<th id="articulosS" scope="row">'+erp_articulos+'</th>' +
+							'<td>'+descrip+'</td>' +
+							'<td>$ '+costo+'</td>' +
 						 '</tr>');
 	
 	//Le aviso al usuario que seleccionó el artículo con éxito.
 	alert('El artículo ' + descrip + ' se agregó correctamente.');
+	
+	var emPed = document.getElementById("em");
+	window.localStorage.setItem("fk_erp_empresa", emPed.innerText);
+	window.localStorage.setItem("fk_erp_articulos", erp_articulos);
+	window.localStorage.setItem("precio", costo);
+	grabaDatos();	
+}
+/*
+Graba pedidos
+*/
+function grabaDatos(){
+	db.transaction(grabaRegistros, errorDB);
+}
+
+function grabaRegistros(tx){
+	//Recojo los datos e inserto en la tabla erp_mig_ped.
+	var emPed = document.getElementById("em");
+	var rzPed = document.getElementById("rz");
+	var docPed = document.getElementById("doc");
+	var tePed = document.getElementById("te");
+	
+	var artTemp = window.localStorage.getItem("fk_erp_articulos");
+	var cosTemp = window.localStorage.getItem("precio");
+
+	
+    var cabecera={empresa: emPed.innerText, raz_soc: rzPed.innerText, doc: docPed.innerText, tel: tePed.innerText, detArt: artTemp, precio: cosTemp};
+	
+	tx.executeSql("insert into erp_mig_ped (fk_erp_empresas, fk_erp_articulos, cantidad, precio)values('"+cabecera.empresa+"','"+cabecera.detArt +"', 1, '"+cabecera.precio+"') ", [], grabarDatosSuccess, errorDB);
+	mkLog("inserté linea para migrar");
+}
+
+function grabarDatosSuccess(tx, results){
+	mkLog("Grabé registro con éxito.");
+	//alert('');
+}
+
+/*
+Depuro la tabla para migrar
+*/
+
+function depuraDatos(){
+	db.transaction(depuraRegistros, errorDB);
+}
+
+function depuraRegistros(tx){
+	tx.executeSql("delete from erp_mig_ped where estado is null ", [], depurarDatosSuccess, errorDB);
+	mkLog("Depuré la tabla para migrar.");
+}
+
+function depurarDatosSuccess(tx, results){
+	mkLog("Éxito al depurar.");
+	location.reload();
 }
 
 
+//Depura al inicio de la aplicación
+function depuraIniDatos(){
+	db.transaction(depuraIniRegistros, errorDB);
+}
+
+function depuraIniRegistros(tx){
+	tx.executeSql("delete from erp_mig_ped where estado <> 'p' ", [], depurarIniDatosSuccess, errorDB);
+	mkLog("borré de la tabla erp_mig_ped los datos basura.");
+}
+
+function depurarIniDatosSuccess(tx, results){
+	mkLog("Éxito al depurar con la función inicial.");
+	//alert('');
+}
+
+
+function grabarPedido(){
+	db.transaction(grabarRegistros, errorDB);
+}
+
+function grabarRegistros(tx){
+	var empTemp = window.localStorage.getItem("fk_erp_empresas");
+	tx.executeSql("update erp_mig_ped set estado = 'p' where estado is null  ", [], grabadoDatosSuccess, errorDB);
+	mkLog("modificaste el estado pendiente segun la empresa seleccionada.");
+}
+
+function grabadoDatosSuccess(tx, results){
+	mkLog("Pedido generado");
+	alert('¡Pedido guardado con éxito!');
+	location.reload();
 	
+}
+
+
+//Preparar para sincronizar.
+
+function syncPrepare(){
+	db.transaction(syncArt, errorDB);
+}
+
+function syncArt(tx){
+	console.log("Seleccionando datos para cargar");
+	tx.executeSql('select * from erp_mig_ped', [], syncArtSuccess, errorDB);
+}
+
+function syncArtSuccess(tx, results){
+	console.log("Recibidos de la base de datos erp_mig_ped " + results.rows.length + " registros");
+	if(results.rows.length == 0){
+		console.log("La tabla erp_mig_ped está vacía.");
+		alert("No hay pedido guardados off line para centralizar.");
+	}else{
+		var contenido =[];
+		for(var i=0; i<results.rows.length; i++){
+			var art = results.rows.item(i);
+			contenido[i]=(art.fk_erp_empresas, art.fk_erp_articulos, art.precio);
+			//alert(contenido);
+			//$("#jsonPed").append(art.fk_erp_empresas, art.fk_erp_articulos, art.precio);
+			$("#jsonPed").append('<button type="button" id="paraCen" onclick="erpCenNow(\''+art.id+'\', \''+art.fk_erp_empresas+'\', \''+art.fk_erp_articulos+'\', \''+art.precio+'\')" class="list-group-item">'+ art.fk_erp_articulos +'</button>');
+			}
+	}	
+}
+
