@@ -59,13 +59,13 @@ function ShowMenu(){
 	$("#configurado").hide();
 	$("#menuPrincial").show();
 }
-/*
+
 function ShowDownload(){
 					$("#menuPrincial").hide();
 					$("#bajada").html('Panel de sincronización.').show();
 					$("#download").show();	
 	}
-*/
+/*
 function ShowDownload(){	
 	var networkState = navigator.connection.type;
 	var states = {};
@@ -125,15 +125,15 @@ function ShowSync(){
 			alert('Detectamos que no estás conectado a ninguna red Wi-Fi, conectate a alguna red disponible y volvé por acá');
 		}	
 	}
+*/
 
-/*
 function ShowSync(){
 					$("#menuPrincial").hide();
 					$("#bajada").html('Panel de sincronización.').show();
 					$("#sync").show();
 					
 			}
-*/
+
 			
 function ShowOrder(){
 		var existe = window.localStorage.getItem("ws");
@@ -736,8 +736,37 @@ function syncArtSuccess(tx, results){
 			contenido[i]=(art.fk_erp_empresas, art.fk_erp_articulos, art.precio);
 			//alert(contenido);
 			//$("#jsonPed").append(art.fk_erp_empresas, art.fk_erp_articulos, art.precio);
-			$("#jsonPed").append('<button type="button" id="paraCen" onclick="erpCenNow(\''+art.id+'\', \''+art.fk_erp_empresas+'\', \''+art.fk_erp_articulos+'\', \''+art.precio+'\')" class="list-group-item">'+ art.fk_erp_articulos +'</button>');
-			}
+			$("#jsonPed").append('<button type="button" id="paraCen" onclick="erpCenNow(\''+art.id+'\', \''+art.fk_erp_empresas+'\', \''+art.fk_erp_articulos+'\', \''+art.precio+'\')" class="list-group-item">Empresa: '+art.fk_erp_empresas+' | Artículo: '+ art.fk_erp_articulos +'</button>');
+			//erpCenNow('+art.id+', '+art.fk_erp_empresas+', '+art.fk_erp_articulos+', '+art.precio+');
+            }
 	}	
 }
 
+/*
+Borro el registro que fue centralizado.
+*/
+function deleteArticulos(){
+	db.transaction(deleteArt, errorDB);
+}
+function deleteArt(tx){
+	var del = window.localStorage.getItem("iddelete");
+	
+	if(!del){
+		alert('No hay pedidos parar borrar');
+		return;
+	}
+	
+	console.log("a punto de borrar el pedido centralizado");
+	tx.executeSql("delete from erp_mig_ped where id = "+del+" ", [], deleteArtSuccess(del), errorDB);
+}
+
+function deleteArtSuccess(del) {
+    var del;
+    console.log('Borre el articulo centralizado '+ del);
+    cleanerSync();
+}
+
+function cleanerSync(){
+    $("#jsonPed").html('');
+    syncPrepare();
+}

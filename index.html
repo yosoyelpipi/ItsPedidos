@@ -649,99 +649,117 @@ body {
 <script language="javascript">
 
 
-	function erpCenNow(ii, ee, aa, pp){
-		$("#estadoSync").show();
-		var ii;
-		var ee;
-		var aa;
-		var pp;
-		var WebService = window.localStorage.getItem("ws");
-		var BaseDeDatos = window.localStorage.getItem("bd");
-		var Usuario = window.localStorage.getItem("user");
-		var Clave = window.localStorage.getItem("password");
-		
-		$.getJSON("http://leocondori.com.ar/app/local/itssync.php", {id:ii, empresa:ee, articulo:aa, precio:pp, ws:WebService, base:BaseDeDatos, usuario:Usuario, pass:Clave}, resultSync, "json");
-	}
+    function erpCenNow(ii, ee, aa, pp)
+    {
+        $("#estadoSync").show();
+        var ii;
+        var ee;
+        var aa;
+        var pp;
+        var WebService = window.localStorage.getItem("ws");
+        var BaseDeDatos = window.localStorage.getItem("bd");
+        var Usuario = window.localStorage.getItem("user");
+        var Clave = window.localStorage.getItem("password");
 
-		//FUCIONES		
-	function resultSync(respuesta){
-		if (respuesta.ItsLoginResult == 0){
-			var idd = respuesta.motivo;
-			$("#estadoSync").hide();
-			alert('Pedido centralizado con éxito.');
-		}else{
-			$("#estadoSync").hide();
-			alert('Existió un error' + respuesta.motivo);
-		}
-	}
+        $.getJSON("http://leocondori.com.ar/app/local/itssync.php", { id: ii, empresa: ee, articulo: aa, precio: pp, ws: WebService, base: BaseDeDatos, usuario: Usuario, pass: Clave }, resultSync, "json");
+    }
 
-
-function addCart(){
-			 if ($('#opciones').val() == '') {
-                alert('Por favor seleccione un artículo!');
-                return;
-            }
-			
-			if ($('#tags').val() == '') {
-				alert('Por favor seleccione una empresa!');
-				return;
-			}
-			
-			$("#detalle").show();
-			
-			var article = $('#opciones').val();
-			$("#erpdetcom").append('<li class="list-group-item">' +
-										'<span class="badge">14</span> ' + 
-										article +
-								   '</li>');
-			$("#ImpTotCot").show();					   
-}			
-
-function addClient(){
-	if ($('#tags').val() == '') {
-		alert('Por favor seleccione una empresa!');
-		return;
-	}
-		$("#cabecera").show();			
-		var empresa = $('#tags').val();
-		window.localStorage.setItem("empresa", empresa);
-		var fk_erp_empresas = window.localStorage.getItem("empresa");
-		$("#subcabecera").html('<p class="bg-primary">Empresa: ' + fk_erp_empresas + '</p>');
-		}
+    //FUCIONES      
+    function resultSync(respuesta)
+    {
+        if (respuesta.ItsLoginResult == 0)
+        {
+            var idd = respuesta.id;
+            window.localStorage.setItem("iddelete", idd);
+            $("#estadoSync").hide();
+            alert('Pedido centralizado con éxito.');
+            deleteArticulos();
+        } else
+        {
+            $("#estadoSync").hide();
+            alert('Existió un error' + respuesta.motivo);
+        }
+    }
 
 
-function dameRenglon(){ 
-	$("#detalle").append('<div class="input-group">' +
-							'<div class="input-group-addon"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></div>' +
-							'<input type="text" id="erpart" class="form-control" placeholder="Artículos">' +
-							'<div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>' +
-						 '</div>');
-  
-}
+    function addCart()
+    {
+        if ($('#opciones').val() == '')
+        {
+            alert('Por favor seleccione un artículo!');
+            return;
+        }
 
-function resetCar(){
-	if( confirm("¿Desea cancelar la edición?") ){
-			window.localStorage.removeItem("empresa");
-			location.reload();
-		}
+        if ($('#tags').val() == '')
+        {
+            alert('Por favor seleccione una empresa!');
+            return;
+        }
 
-}
+        $("#detalle").show();
 
-function acept(){
-	grabarPedido();
-}
+        var article = $('#opciones').val();
+        $("#erpdetcom").append('<li class="list-group-item">' +
+                                            '<span class="badge">14</span> ' +
+                                            article +
+                                       '</li>');
+        $("#ImpTotCot").show();
+    }
 
-function cancel(){
-	if( confirm("¿Cancela la edición?") ){
+    function addClient()
+    {
+        if ($('#tags').val() == '')
+        {
+            alert('Por favor seleccione una empresa!');
+            return;
+        }
+        $("#cabecera").show();
+        var empresa = $('#tags').val();
+        window.localStorage.setItem("empresa", empresa);
+        var fk_erp_empresas = window.localStorage.getItem("empresa");
+        $("#subcabecera").html('<p class="bg-primary">Empresa: ' + fk_erp_empresas + '</p>');
+    }
+
+
+    function dameRenglon()
+    {
+        $("#detalle").append('<div class="input-group">' +
+                                '<div class="input-group-addon"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></div>' +
+                                '<input type="text" id="erpart" class="form-control" placeholder="Artículos">' +
+                                '<div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>' +
+                             '</div>');
+
+    }
+
+    function resetCar()
+    {
+        if (confirm("¿Desea cancelar la edición?"))
+        {
+            window.localStorage.removeItem("empresa");
+            location.reload();
+        }
+
+    }
+
+    function acept()
+    {
+        grabarPedido();
+    }
+
+    function cancel()
+    {
+        if (confirm("¿Cancela la edición?"))
+        {
             depuraDatos();
-            }
-}
+        }
+    }
 
-function search(){
-	alert('Función no implementada.');
-}
+    function search()
+    {
+        alert('Función no implementada.');
+    }
 
-	
+
 </script>
 	<!--AUTOCOMPLETAR-->
 
