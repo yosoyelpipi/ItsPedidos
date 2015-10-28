@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
-    <title>LocalStorage</title>
+    <title>LocalStora</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -229,40 +229,6 @@ function successCB(){
 
 
 <style>
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
-}
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 200px;
-  opacity: 0.9;
-  filter: alpha(opacity=1);
-  background-color: #000000;
-}
-
-
-/* Custom page CSS
--------------------------------------------------- */
-/* Not required for template or sticky footer method. */
-
-.container {
-  width: auto;
-  max-width: 680px;
-  padding: 0 15px;
-}
-.container .text-muted {
-  margin: 20px 0;
-}    
 	#muestroresultado{
 		text-align: left;
 	}
@@ -329,9 +295,6 @@ body {
 	#estadoSync{
 		display: none;
 	}
-    #menufooter {
-        display:  none;
-    }
 </style>	
   </head>
 
@@ -568,6 +531,7 @@ body {
 	<button type="button" class="btn btn-success btn-lg btn-block" onClick="syncPrepare()"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Sincronizar datos</button>
 	<hr>
 	<div class="list-group" id="jsonPed">
+	
 	</div>
 	<div id="estadoSync"><img src="img/juego-chrome.gif" width="100%"><br></div>
 	<hr>
@@ -575,33 +539,12 @@ body {
 	</div>
 	
     </div><!-- /.container -->
-
-    <footer class="footer" id="menufooter">
-      <div class="container" id="button-footer" style="margin-top: 60px; ">
-        <div class="btn-group btn-group-justified" role="group" aria-label="true">
-          <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default"><p style="font-size: 20px"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></p><p>Show modal</p></button>
-          </div>
-          <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default"><p style="font-size: 20px"><span class="glyphicon glyphicon-off" aria-hidden="true"></span></p><p>Show modal</p></button>
-          </div>
-            <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default"><p style="font-size: 20px"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></p><p>Show modal</p></button>
-          </div>
-          <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default"><p style="font-size: 20px"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></p><p>Show modal</p></button>
-          </div>
-        </div>       
-      </div>
-    </footer>
-
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery.min.js"></script>
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>	
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>	
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
@@ -651,6 +594,16 @@ body {
 		var BaseDeDatos = window.localStorage.getItem("bd");
 		var Usuario = window.localStorage.getItem("user");
 		var Clave = window.localStorage.getItem("password");
+/*
+	alert(ii);
+	alert(ee);
+	alert(aa);
+	alert(pp);
+	alert(WebService);
+	alert(BaseDeDatos);
+	alert(Usuario);
+	alert(Clave);
+*/
 		
 		$.getJSON("http://leocondori.com.ar/app/local/itssync.php", {id:ii, empresa:ee, articulo:aa, precio:pp, ws:WebService, base:BaseDeDatos, usuario:Usuario, pass:Clave}, resultSync, "json");
 	}
@@ -660,7 +613,7 @@ body {
 		if (respuesta.ItsLoginResult == 0){
 			var idd = respuesta.motivo;
 			$("#estadoSync").hide();
-			alert('Pedido centralizado con éxito.');
+			alert('Pedido centrizado con éxito.');
 		}else{
 			$("#estadoSync").hide();
 			alert('Existió un error' + respuesta.motivo);

@@ -43,6 +43,12 @@ function onDeviceReady(){
 	//Habilita la función del botón menú.
 	document.addEventListener("menubutton", onMenuKeyDown, false);
 	
+	//Cargo las empresas guardadas.
+	//cargaEmpresas();
+	
+	//Cargo la lista de precios guardadas.
+	//cargaArticulos();
+	
 	//Depuro los pedidos para migrar
 	depuraIniDatos();
 	
@@ -59,13 +65,14 @@ function ShowMenu(){
 	$("#configurado").hide();
 	$("#menuPrincial").show();
 }
-/*
+
 function ShowDownload(){
 					$("#menuPrincial").hide();
 					$("#bajada").html('Panel de sincronización.').show();
 					$("#download").show();	
 	}
-*/
+
+/*
 function ShowDownload(){	
 	var networkState = navigator.connection.type;
 	var states = {};
@@ -95,7 +102,9 @@ function ShowDownload(){
 			alert('Detectamos que no estás conectado a ninguna red Wi-Fi, conectate a alguna red disponible y volvé por acá');
 		}	
 	}
+*/	
 
+/*	
 function ShowSync(){	
 	var networkState = navigator.connection.type;
 	var states = {};
@@ -124,16 +133,15 @@ function ShowSync(){
 			//alert(states[networkState]);
 			alert('Detectamos que no estás conectado a ninguna red Wi-Fi, conectate a alguna red disponible y volvé por acá');
 		}	
-	}
+	}	
+*/
 
-/*
 function ShowSync(){
 					$("#menuPrincial").hide();
 					$("#bajada").html('Panel de sincronización.').show();
 					$("#sync").show();
 					
 			}
-*/
 			
 function ShowOrder(){
 		var existe = window.localStorage.getItem("ws");
@@ -202,8 +210,7 @@ function Vermenu(){
 
 // Función activada. Botón Menú.
 function onMenuKeyDown() {
-	//alert('No hay opciones de menu disponible por el momento');
-    $("#menufooter").show();
+	alert('<small>No hay opciones de menu disponible por el momento.</small>');					
     }
 
 function onBackKeyDown() {
