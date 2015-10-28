@@ -770,3 +770,39 @@ function cleanerSync(){
     $("#jsonPed").html('');
     syncPrepare();
 }
+
+$("#btnGetCamera").click(function (e)
+{
+    e.stopPropagation();
+    navigator.camera.getPicture(cameraSuccess, cameraError,
+    {
+        quality: 50,
+        destinationType : Camera.DestinationType.FILE_URI,
+        sourceType : Camera.PicturesSourceType.CAMERA,
+        allowEdit: true,
+        encodingType : Camera.EncodingType.JPEG,
+        saveTophotoAlbum: true
+    });
+});
+
+$("#btnGetLibrary").click(function (e)
+{
+    e.stopPropagation();
+    navigator.camera.getPicture(cameraSuccess, cameraError,
+    {
+        quality: 50,
+        destinationType : Camera.DestinationType.FILE_URI,
+        sourceType : Camera.PicturesSourceType.PHOTOLIBRARY,
+        allowEdit: true,
+        encodingType : Camera.EncodingType.JPEG,
+        saveTophotoAlbum: true
+    });
+});
+
+function cameraSuccess(imageURL) {
+    $("#foto_img").attr("src", imageURL);
+}
+
+function cameraError(msg) {
+    navigator.notification.alert("Error capturando foto: "+ msg);     
+}
