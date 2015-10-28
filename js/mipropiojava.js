@@ -203,7 +203,7 @@ function Vermenu(){
 // Función activada. Botón Menú.
 function onMenuKeyDown() {
 	//alert('No hay opciones de menu disponible por el momento');
-    $("#menufooter").show();
+    show_hidden('menufooter');
     }
 
 function onBackKeyDown() {
