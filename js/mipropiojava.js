@@ -771,28 +771,28 @@ function cleanerSync(){
     syncPrepare();
 }
 
-			 //preparamos los elementos activos de la app
-			  $("#btnGetCamara").click(function(e){
-				e.stopPropagation();
-					navigator.camera.getPicture( cameraSuccess, cameraError, { quality : 50,
-																destinationType : Camera.DestinationType.FILE_URI,
-																sourceType : Camera.PictureSourceType.CAMERA,
-																allowEdit : true,
-																encodingType: Camera.EncodingType.JPEG,
-																			  saveToPhotoAlbum: true 
-				} );
-			});
+	//preparamos los elementos activos de la app
+	$("#btnGetCamera").click(function(e){
+	e.stopPropagation();
+		navigator.camera.getPicture( cameraSuccess, cameraError, { quality : 50,
+													destinationType : Camera.DestinationType.FILE_URI,
+													sourceType : Camera.PictureSourceType.CAMERA,
+													allowEdit : true,
+													encodingType: Camera.EncodingType.JPEG,
+																	saveToPhotoAlbum: true 
+	} );
+});
 			
-			$("#btnGetLibrary").click(function(e){
-				e.stopPropagation();
-					navigator.camera.getPicture( cameraSuccess, cameraError, { quality : 50,
-																destinationType : Camera.DestinationType.FILE_URI,
-																sourceType : Camera.PictureSourceType.PHOTOLIBRARY,
-																allowEdit : true,
-																encodingType: Camera.EncodingType.JPEG,
-																saveToPhotoAlbum: true 
-				} );
-			});
+$("#btnGetLibrary").click(function(e){
+	e.stopPropagation();
+		navigator.camera.getPicture( cameraSuccess, cameraError, { quality : 50,
+													destinationType : Camera.DestinationType.FILE_URI,
+													sourceType : Camera.PictureSourceType.PHOTOLIBRARY,
+													allowEdit : true,
+													encodingType: Camera.EncodingType.JPEG,
+													saveToPhotoAlbum: true 
+	} );
+});
 
 function cameraSuccess(imageURL) {
     $("#foto_img").attr("src", imageURL);
