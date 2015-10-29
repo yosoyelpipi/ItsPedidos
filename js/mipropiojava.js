@@ -70,6 +70,10 @@ function onDeviceReady(){
 	    } );
     });
 
+	
+}//Fin OnReadyDevice
+
+
     function cameraSuccess(imageURL) {
         $("#foto_img").attr("src", imageURL);
     }
@@ -78,8 +82,6 @@ function onDeviceReady(){
         navigator.notification.alert("Error capturando foto: "+ msg);     
     }
 
-	
-}//Fin OnReadyDevice
 
 function ShowParam(){
 	$("#menuPrincial").hide();
