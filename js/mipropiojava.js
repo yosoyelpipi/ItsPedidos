@@ -76,6 +76,8 @@ function onDeviceReady(){
 
     function cameraSuccess(imageURL) {
         $("#foto_img").attr("src", imageURL);
+        	//$.imageURL = imageURL;
+	        //$("#li_"+$.id).find("img").attr("src", $.imageURL);
     }
 
     function cameraError(msg) {
