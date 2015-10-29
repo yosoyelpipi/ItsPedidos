@@ -60,8 +60,8 @@ function onDeviceReady(){
 });
 			
     $("#btnGetLibrary").click(function(e){
-	    e.stopPropagation();
-		    navigator.camera.getPicture( cameraSuccess, cameraError, { quality : 50,
+	e.stopPropagation();
+		navigator.camera.getPicture( cameraSuccess, cameraError, { quality : 50,
 													    destinationType : Camera.DestinationType.FILE_URI,
 													    sourceType : Camera.PictureSourceType.PHOTOLIBRARY,
 													    allowEdit : true,
@@ -75,9 +75,12 @@ function onDeviceReady(){
 
 
     function cameraSuccess(imageURL) {
-        $("#foto_img").attr("src", imageURL);
-        	//$.imageURL = imageURL;
-	        //$("#li_"+$.id).find("img").attr("src", $.imageURL);
+        //$("#foto_img").attr("src", imageURL);
+        //$.imageURL = imageURL;
+	    //$("#li_"+$.id).find("img").attr("src", $.imageURL);
+	    $("#foto_img").attr("src", imageURL);
+	    $.imageURL = imageURL;
+	    $("#foto_img").attr("src", imageURL);
     }
 
     function cameraError(msg) {
