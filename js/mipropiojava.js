@@ -66,7 +66,7 @@ function onDeviceReady(){
 													    sourceType : Camera.PictureSourceType.PHOTOLIBRARY,
 													    allowEdit : true,
 													    encodingType: Camera.EncodingType.JPEG,
-													    saveToPhotoAlbum: true 
+													                saveToPhotoAlbum: true 
 	    } );
     });
 
