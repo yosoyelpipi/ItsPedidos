@@ -45,8 +45,42 @@ function onDeviceReady(){
 	
 	//Depuro los pedidos para migrar
 	depuraIniDatos();
+
+
+    	//preparamos los elementos activos de la app
+	$("#btnGetCamera").click(function(e){
+	e.stopPropagation();
+		navigator.camera.getPicture( cameraSuccess, cameraError, { quality : 50,
+													destinationType : Camera.DestinationType.FILE_URI,
+													sourceType : Camera.PictureSourceType.CAMERA,
+													allowEdit : true,
+													encodingType: Camera.EncodingType.JPEG,
+																	saveToPhotoAlbum: true 
+	} );
+});
+			
+    $("#btnGetLibrary").click(function(e){
+	    e.stopPropagation();
+		    navigator.camera.getPicture( cameraSuccess, cameraError, { quality : 50,
+													    destinationType : Camera.DestinationType.FILE_URI,
+													    sourceType : Camera.PictureSourceType.PHOTOLIBRARY,
+													    allowEdit : true,
+													    encodingType: Camera.EncodingType.JPEG,
+													    saveToPhotoAlbum: true 
+	    } );
+    });
+
+    function cameraSuccess(imageURL) {
+        $("#foto_img").attr("src", imageURL);
+    }
+
+    function cameraError(msg) {
+        navigator.notification.alert("Error capturando foto: "+ msg);     
+    }
+
 	
-}
+}//Fin OnReadyDevice
+
 function ShowParam(){
 	$("#menuPrincial").hide();
 	$("#bajada").html('Podrás configurar la conexión al WebService.').show();	
@@ -59,13 +93,13 @@ function ShowMenu(){
 	$("#configurado").hide();
 	$("#menuPrincial").show();
 }
-
+/*
 function ShowDownload(){
 					$("#menuPrincial").hide();
 					$("#bajada").html('Panel de sincronización.').show();
 					$("#download").show();	
 	}
-/*
+*/
 function ShowDownload(){	
 	var networkState = navigator.connection.type;
 	var states = {};
@@ -125,15 +159,14 @@ function ShowSync(){
 			alert('Detectamos que no estás conectado a ninguna red Wi-Fi, conectate a alguna red disponible y volvé por acá');
 		}	
 	}
-*/
-
+/*
 function ShowSync(){
 					$("#menuPrincial").hide();
 					$("#bajada").html('Panel de sincronización.').show();
 					$("#sync").show();
 					
 			}
-
+*/
 			
 function ShowOrder(){
 		var existe = window.localStorage.getItem("ws");
@@ -769,35 +802,4 @@ function deleteArtSuccess(del) {
 function cleanerSync(){
     $("#jsonPed").html('');
     syncPrepare();
-}
-
-	//preparamos los elementos activos de la app
-	$("#btnGetCamera").click(function(e){
-	e.stopPropagation();
-		navigator.camera.getPicture( cameraSuccess, cameraError, { quality : 50,
-													destinationType : Camera.DestinationType.FILE_URI,
-													sourceType : Camera.PictureSourceType.CAMERA,
-													allowEdit : true,
-													encodingType: Camera.EncodingType.JPEG,
-																	saveToPhotoAlbum: true 
-	} );
-});
-			
-$("#btnGetLibrary").click(function(e){
-	e.stopPropagation();
-		navigator.camera.getPicture( cameraSuccess, cameraError, { quality : 50,
-													destinationType : Camera.DestinationType.FILE_URI,
-													sourceType : Camera.PictureSourceType.PHOTOLIBRARY,
-													allowEdit : true,
-													encodingType: Camera.EncodingType.JPEG,
-													saveToPhotoAlbum: true 
-	} );
-});
-
-function cameraSuccess(imageURL) {
-    $("#foto_img").attr("src", imageURL);
-}
-
-function cameraError(msg) {
-    navigator.notification.alert("Error capturando foto: "+ msg);     
 }
