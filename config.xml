@@ -1,38 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<widget xmlns = "http://www.w3.org/ns/widgets"
-		xmlns:gap = "http://phonegap.com/ns/1.0"
-		id        = "com.itspedidos.app"
-		version   = "1.0.44">
-
-	<name>ItsClient</name>
-
-	<description>
-	ItsClient es una aplicacion que te permite grabar pedidos con tu celular en Itris Software.
-	</description>
-
-
-	<preference name="phonegap-version" value="3.6.3" />
-    <access origin="*" />
-	
-<gap:plugin name="org.apache.cordova.camera" source="pgb" version="0.3.2" />
-<gap:plugin name="org.apache.cordova.device" source="pgb" version="0.2.12" />
-<gap:plugin name="org.apache.cordova.dialogs" source="pgb" version="0.2.10" />
-<gap:plugin name="org.apache.cordova.network-information" source="pgb" version="0.2.12" />
-
-	<preference name="fullscreen" value="true" />
-	<icon src="img/icon_gde.png" />
-	<gap:splash src="img/splash.png" />
-
-	<preference name="splash-screen-duration" value="20000" />
-	<preference name="exit-on-suspend" value="true" />
-	<preference name="android-minSdkVersion" value="5" />
-	<preference name="android-targetSdkVersion" value="19" />
-	<preference name="android-maxSdkVersion" value="19" />
-	
-	<access origin="http://leocondori.com.ar" />
-
-	<author href="http://www.leocondori.com.ar" email="contacto@leocondori.com.ar">
-	@leocondori
-	</author>
-
-</widget>
+<?xml version="1.0" encoding="UTF-8"?>	<widget xmlns = "http://www.w3.org/ns/widgets"		xmlns:gap = "http://phonegap.com/ns/1.0"		id        = "com.itspedidos.app"		versionCode=""		version   = "1.0.44">		<name>Pedidos</name>		<description>ItsClient es una aplicacion que te permite grabar pedidos con tu celular en Itris Software.		</description>		<author href="http://www.leocondori.com.ar" email="contacto@leocondori.com.ar">@leocondori		</author>		<preference name="phonegap-version" value="3.6.3" />		<preference name="fullscreen" value="true" />		<preference name="webviewbounce" value="true" />		<preference name="prerendered-icon" value="false" />		<preference name="stay-in-webview" value="false" />		<preference name="ios-statusbarstyle" value="default" />		<preference name="detect-data-types" value="true" />		<preference name="exit-on-suspend" value="true" />		<preference name="show-splash-screen-spinner" value="true" />		<preference name="auto-hide-splash-screen" value="true" />		<preference name="EnableViewportScale" value="false" />		<preference name="MediaPlaybackRequiresUserAction" value="false" />		<preference name="AllowInlineMediaPlayback" value="false" />		<preference name="BackupWebStorage" value="cloud" />		<preference name="TopActivityIndicator" value="gray" />		<preference name="KeyboardDisplayRequiresUserAction" value="true" />		<preference name="HideKeyboardFormAccessoryBar" value="false" />		<preference name="SuppressesIncrementalRendering" value="false" />		<preference name="android-minSdkVersion" value="7" />		<preference name="android-maxSdkVersion" value="19" />		<preference name="android-targetSdkVersion" value="19" />		<preference name="android-installLocation" value="internalOnly" />		<preference name="SplashScreenDelay" value="20000" />		<preference name="ErrorUrl" value="error.html"/>		<preference name="BackgroundColor" value=""/>		<preference name="KeepRunning" value="true"/>		<preference name="DisallowOverscroll" value="false"/>		<preference name="LoadingDialog" value="ItsPedidos,cargando..."/> 		<preference name="LoadUrlTimeoutValue" value="20000" />		<preference name="disable-cursor" value="false" />		<gap:platform name="android" />		<gap:platform name="winphone" />		<feature name="http://api.phonegap.com/1.0/camera"/>		<feature name="http://api.phonegap.com/1.0/file"/>		<feature name="http://api.phonegap.com/1.0/geolocation"/>		<feature name="http://api.phonegap.com/1.0/media"/>		<feature name="http://api.phonegap.com/1.0/network"/>		<feature name="http://api.phonegap.com/1.0/notification"/>		<feature name="http://api.phonegap.com/1.0/camera"/>		<feature name="http://api.phonegap.com/1.0/geolocation"/>		<feature name="http://api.phonegap.com/1.0/media"/>		<feature name="http://api.phonegap.com/1.0/network"/>		<gap:plugin name="org.apache.cordova.camera"  />		<gap:plugin name="org.apache.cordova.device"  />		<gap:plugin name="org.apache.cordova.dialogs"  />		<gap:plugin name="org.apache.cordova.network-information"  />		<icon src="img/36x36.png" gap:platform="android" gap:density="ldpi" />		<icon src="img/48x48.png" gap:platform="android" gap:density="mdpi" />		<icon src="img/72x72.png" gap:platform="android" gap:density="hdpi" />		<icon src="img/96x96.png" gap:platform="android" gap:density="xhdpi" />		<icon src="img/144x144.png" gap:platform="android" gap:density="xxhdpi" />		<icon src="img/192x192.png" gap:platform="android" gap:density="xxxhdpi" />		<icon src="img/62x62.png" gap:platform="winphone" />		<icon src="img/173x173.png" gap:platform="winphone" gap:role="background" />		<icon src="img/icon_gde.png" />		<gap:splash src="img/240x400.png" gap:platform="android" gap:density="ldpi" />		<gap:splash src="img/320x480.png" gap:platform="android" gap:density="mdpi" />		<gap:splash src="img/480x800.png" gap:platform="android" gap:density="hdpi" />		<gap:splash src="img/720x960.png" gap:platform="android" gap:density="xhdpi" />		<gap:splash src="img/1080x1920.png" gap:platform="android" gap:density="xxhdpi" />		<gap:splash src="img/480x800.png" gap:platform="winphone" />		<gap:splash src="splash.png" />		<access origin="*" />		<access origin="http://leocondori.com.ar" />	</widget>
